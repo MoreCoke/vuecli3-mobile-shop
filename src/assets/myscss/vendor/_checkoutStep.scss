@@ -1,0 +1,90 @@
+.step {
+  list-style: none;
+  display: flex;
+  li{
+    display: flex;
+    flex:0.3333;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    &.done{
+      .step-icon{
+        background-color: $primary;
+      }
+      &::before{
+        background: linear-gradient(to right,lighten($primary,50%),$primary);
+      }
+      &::after{
+        background: linear-gradient(to right,$primary,lighten($primary,50%));
+      }
+    }
+  }
+  .step-check{
+    &::after{
+      content:"";
+      position: absolute;
+      z-index: -1;
+      display: block;
+      width:50%;
+      top:30%;
+      right: 0;
+      height: 5px;
+      background-color: lighten($primary,50%);
+    }
+  }
+  .step-credit{
+    &:before{
+      content:"";
+      position: absolute;
+      z-index: -1;
+      display: block;
+      width:50%;
+      top:30%;
+      left: 0;
+      height: 5px;
+      background-color: lighten($primary,50%);
+    }
+    &::after{
+      content:"";
+      position: absolute;
+      z-index: -1;
+      display: block;
+      width:50%;
+      top:30%;
+      right: 0;
+      height: 5px;
+      background-color: lighten($primary,50%);
+    }
+  }
+  .step-finished{
+    &::before{
+      content:"";
+      position: absolute;
+      z-index: -1;
+      display: block;
+      width:50%;
+      top:30%;
+      left: 0;
+      height: 5px;
+      background-color: lighten($primary,50%);
+    }
+  }
+  .step-icon{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 70px;
+    height: 70px;
+    border-radius: 100%;
+    background-color: lighten($primary,50%);
+    color: white;
+    margin-bottom: 1rem;
+  }
+  &-text{
+    text-align: center;
+    font-size: $font-size-2;
+    @include media-breakpoint-up(md){
+      font-size:$font-size-3;
+    }
+  }
+}

@@ -1,0 +1,23 @@
+.product-sidebar {
+  a {
+    text-decoration: none;
+    &:hover {
+      background-color: lighten($primary,10%);
+      color: white;
+    }
+  }
+}
+.product-bar {
+  .nav-item {
+    font-size: 1.25rem;
+    a{
+      border-radius: 0;
+      &:hover {
+        background-color: lighten($primary,10%);
+        cursor: pointer;
+        text-decoration: none;
+        color: white;
+      }
+    }
+  }
+}
