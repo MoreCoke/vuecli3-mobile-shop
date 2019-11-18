@@ -8,10 +8,12 @@
         :key="`swiper-${index}`"
         :style="item.imgpath"
       >
-        <div class="ad-news justify-content-start align-items-center align-items-md-end">
+        <div class="ad-news justify-content-center justify-content-md-end align-items-start">
           <div class="frosted-zone">
-            <h2 class="headtitle mb-2">{{item.title}}</h2>
-            <h5 class="subtitle">{{item.text}}</h5>
+            <div class="frosted-zone-inner">
+              <h2 class="headtitle mb-2">{{item.title}}</h2>
+              <h5 class="subtitle">{{item.text}}</h5>
+            </div>
           </div>
         </div>
       </swiper-slide>
@@ -86,7 +88,7 @@
               </div>
             </div>
           </div>
-          <div class="col-md-6 mb-3">
+          <div class="col-md-6 mb-4">
             <div class="renew">
               <div class="renew-imgzone">
                 <div class="renew-img bg-cover"></div>
@@ -252,7 +254,7 @@ export default {
         {
           name: "iPhone 11 Pro",
           text: "後置三鏡頭 | 5.8 吋 OLED",
-          routerpath:'/guest/productdetail/-LseWhNSDZAaoE-L2VqN',
+          routerpath: "/guest/productdetail/-LseWhNSDZAaoE-L2VqN",
           imgpath: {
             backgroundImage:
               "url(" + require("@/assets/img/iphone11pro.jpg") + ")"
@@ -264,7 +266,7 @@ export default {
         {
           name: "Sony Xperia 5 ",
           text: "眼控對焦 | 八核心處理",
-          routerpath:'/guest/productdetail/-LrnKPvMhdwPiRhofsjQ',
+          routerpath: "/guest/productdetail/-LrnKPvMhdwPiRhofsjQ",
           imgpath: {
             backgroundImage:
               "url(" + require("@/assets/img/xperia-5-primary.png") + ")"
@@ -276,7 +278,7 @@ export default {
         {
           name: "Samsung Galaxy Note 10 Plus",
           text: "八核心處理器 | O 極限螢幕",
-          routerpath:'/guest/productdetail/-Lse_PHBDKpMPI5kunSH',
+          routerpath: "/guest/productdetail/-Lse_PHBDKpMPI5kunSH",
           imgpath: {
             backgroundImage:
               "url(" +
@@ -293,7 +295,7 @@ export default {
   },
   methods: {
     getData() {
-      let url = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_CUSTOMPATH}/products/all`;
+      let url = `${process.env.APIPATH}api/${process.env.CUSTOMPATH}/products/all`;
       let vm = this;
       vm.$http.get(url).then(response => {
         vm.getRandomProduct(...response.data.products);
@@ -310,11 +312,11 @@ export default {
       let len = data.length;
       while (vm.random.length < 9) {
         let r = Math.floor(Math.random() * len);
-        if (vm.random.indexOf(data[r]) === -1 && data[r].unit==="台") {
+        if (vm.random.indexOf(data[r]) === -1 && data[r].unit === "台") {
           vm.random.push(data[r]);
         }
       }
-    },
+    }
   },
   created() {
     this.getData();

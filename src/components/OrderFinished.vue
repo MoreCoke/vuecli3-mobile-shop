@@ -38,41 +38,27 @@
     <div class="topic text-primary">訂購人資料</div>
     <div class="userdata mb-4">
       <div class="userdata-inside">
-        <table class="table" v-if="order.user">
-          <tbody>
-            <tr>
-              <th>下單日期 :</th>
-              <td>{{order.create_at | date}}</td>
-            </tr>
-            <tr class="border-bottom">
-              <th>訂單編號 :</th>
-              <td>{{order.id}}</td>
-            </tr>
-            <tr>
-              <th>訂購人姓名 :</th>
-              <td>{{order.user.name}}</td>
-            </tr>
-            <tr>
-              <th>訂購人電話 :</th>
-              <td>{{order.user.tel}}</td>
-            </tr>
-            <tr>
-              <th>訂購人Email :</th>
-              <td>{{order.user.email}}</td>
-            </tr>
-            <tr class="border-bottom">
-              <th>訂購人地址 :</th>
-              <td>{{order.user.address}}</td>
-            </tr>
-            <tr>
-              <th>付款狀態 :</th>
-              <td>
-                <span v-if="order.is_paid" class="text-success">付款完成</span>
-                <span v-else class="text-danger">尚未付款</span>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <div class="row justify-content-center" v-if="order.user">
+          <div class="col-sm-4 mb-2 mb-sm-3">下單日期 :</div>
+          <div class="col-sm-8 mb-2 mb-sm-3">{{order.create_at | date}}</div>
+          <div class="col-sm-4 mb-2 mb-sm-3">訂單編號 :</div>
+          <div class="col-sm-8 mb-2 mb-sm-3">{{order.id}}</div>
+          <div class="divider"></div>
+          <div class="col-sm-4 mb-2 mb-sm-3">訂購人姓名 :</div>
+          <div class="col-sm-8 mb-2 mb-sm-3">{{order.user.name}}</div>
+          <div class="col-sm-4 mb-2 mb-sm-3">訂購人電話 :</div>
+          <div class="col-sm-8 mb-2 mb-sm-3">{{order.user.tel}}</div>
+          <div class="col-sm-4 mb-2 mb-sm-3">訂購人Email :</div>
+          <div class="col-sm-8 mb-2 mb-sm-3">{{order.user.email}}</div>
+          <div class="col-sm-4 mb-2 mb-sm-3">訂購人地址 :</div>
+          <div class="col-sm-8 mb-2 mb-sm-3">{{order.user.address}}</div>
+          <div class="divider"></div>
+          <div class="col-sm-4 mb-2 mb-sm-3">付款狀態 :</div>
+          <div class="col-sm-8 mb-2 mb-sm-3">
+            <span v-if="order.is_paid" class="text-success">付款完成</span>
+            <span v-else class="text-danger">尚未付款</span>
+          </div>
+        </div>
         <div class="text-center my-3">
           <button class="btn btn-primary mx-auto" v-if="!order.is_paid" @click="payOrder(orderId)">
             確認付款

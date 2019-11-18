@@ -1,20 +1,5 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import Login from '@/components/views/Login';
-//父組件
-import Guest from '@/components/views/Guest';
-import Admin from '@/components/views/Admin';
-//訪客組件
-// import GuestHome from "@/components/guests/GuestHome";
-import GuestProductList from "@/components/guests/GuestProductList";
-import GuestProductDetail from "@/components/guests/GuestProductDetail";
-import GuestOrder from "@/components/guests/GuestOrder";
-import GuestAboutUs from "@/components/guests/GuestAboutUs";
-import GuestPromotion from "@/components/guests/GuestPromotion";
-//後台組件
-import AdminProductList from '@/components/admin/AdminProductList';
-import AdminCoupon from "@/components/admin/AdminCoupon";
-import AdminOrderList from '@/components/admin/AdminOrderList';
 
 Vue.use(VueRouter);
 const originalPush = VueRouter.prototype.push;
@@ -30,67 +15,67 @@ const routes = [
   {
     path: '/login',
     name: 'Login',
-    component: Login,
+    component: () => import('@/components/views/Login'),
   },
   {
     path: '/guest',
     name: 'Guest',
-    component: Guest,
+    component: () => import('@/components/views/Guest'),
     children: [
       {
         path: 'home',
         name: 'Home',
-        component: () => import('@/components/guests/GuestHome'),// GuestHome,
+        component: () => import('@/components/guests/GuestHome'),
       },
       {
         path: 'productlist/:brand',
         name: "Productlist",
-        component : GuestProductList,
+        component: () => import('@/components/guests/GuestProductList'),
       },
       {
         path: 'productdetail/:id',
         name: "Productdetail",
-        component : GuestProductDetail,
+        component: () => import('@/components/guests/GuestProductDetail'),
       },
       {
         path: 'productorder/:step',
         name: "Productorder",
-        component: GuestOrder,
+        component: () => import('@/components/guests/GuestOrder'),
       },
       {
-        path:'aboutus',
+        path: 'aboutus',
         name: 'AboutUs',
-        component: GuestAboutUs,
+        component: () => import('@/components/guests/GuestAboutUs'),
       },
       {
-        path:'promotion',
-        name:'Promotion',
-        component:GuestPromotion,
+        path: 'promotion',
+        name: 'Promotion',
+        component: () => import('@/components/guests/GuestPromotion'),
       }
     ]
   },
   {
     path: '/admin',
     name: 'Admin',
-    component: Admin,
+    component: () => import('@/components/views/Admin'),
     children: [
       {
         path: 'products',
         name: 'Products',
-        component: AdminProductList,
+        component: () => import('@/components/admin/AdminProductList'),
         meta: { requiresAuth: true },
       },
       {
         path: 'orders',
         name: 'Orders',
-        component: AdminOrderList,
+        component: () => import('@/components/admin/AdminOrderList'),
         meta: { requiresAuth: true },
       },
       {
         path: 'coupons',
-        name:'Coupons',
-        component: AdminCoupon,
-        meta:{ requiresAuth : true},
+        name: 'Coupons',
+        component: () => import('@/components/admin/AdminCoupon'),
+        meta: { requiresAuth: true },
       }
     ]
   },

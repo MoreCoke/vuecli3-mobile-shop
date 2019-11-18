@@ -56,21 +56,8 @@
           <li>
             <a href="#" @click.prevent="toAboutUs">關於我們</a>
           </li>
-          <!-- <li>
-            <a href="#" @click.prevent="toOrderCheck">結帳買單</a>
-          </li> -->
           <li>
             <a href="#" @click.prevent="toProductList">商品列表</a>
-          </li>
-          <li>
-            <a href="#" @click.prevent="signin">
-              <i class="fas fa-users-cog"></i><span>後台管理</span>
-            </a>
-          </li>
-          <li>
-            <a href="#" @click.prevent="signout" v-if="isSignin">
-              <i class="fas fa-sign-out-alt"></i><span>登出</span>
-            </a>
           </li>
         </ul>
       </div>
@@ -87,41 +74,9 @@ export default {
       objClass: {
         open: false
       },
-      isSignin: false
     };
   },
   methods: {
-    //檢查登入狀態
-    checkSignin() {
-      const api = `${process.env.APIPATH}api/user/check`;
-      const vm = this;
-      this.$http.post(api).then(response => {
-        vm.isSignin = response.data.success;
-      });
-    },
-    signin() {
-      if (this.isSignin) {
-        this.$router.push("/admin/products");
-      } else {
-        this.$router.push("/login");
-      }
-      this.hideNavbar();
-    },
-    signout() {
-      const api = `${process.env.APIPATH}logout`; //'https://vue-course-api.hexschool.io/api/morecoke/products?page=:page';
-      const vm = this;
-      this.$http.post(api).then(response => {
-        if (response.data.success) {
-          vm.$router.push("/guests/home");
-          vm.isSignin = false;
-        }
-      });
-      this.hideNavbar();
-    },
-    toOrderCheck() {
-      this.$router.push("/guest/productorder/check");
-      this.hideNavbar();
-    },
     toProductList() {
       this.$router.push("/guest/productlist/全部品牌");
       this.hideNavbar();
@@ -144,13 +99,7 @@ export default {
       this.objClass.open = false;
     }
   },
-  watch: {
-    $route() {
-      this.checkSignin();
-    }
-  },
   mounted() {
-    this.checkSignin();
     this.navAnimation();
   }
 };

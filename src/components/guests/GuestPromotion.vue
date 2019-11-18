@@ -174,6 +174,6 @@ export default {
   created() {
     this.getData();
     // this.getCoupons();
-  }
+  },
 };
 </script>

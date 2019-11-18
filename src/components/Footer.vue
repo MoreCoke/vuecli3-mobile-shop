@@ -7,10 +7,13 @@
             <span class="text-white h5 text-center mb-4">僅用做學習，禁止任何商業用途</span>
             <div class="d-flex justify-content-center align=items-center">
               <a href="https://github.com/MoreCoke/Vue-test" class="mx-2">
-                <i class="fab fa-lg fa-github fa-2x text-white"></i>
+                <i class="fab fa-lg fa-github fa-2x info-link"></i>
               </a>
               <a href="https://codepen.io/moreCoke" class="mx-2">
-                <i class="fab fa-codepen fa-2x text-white"></i>
+                <i class="fab fa-codepen fa-2x info-link"></i>
+              </a>
+              <a href="#" class="mx-2" @click.prevent="signin">
+                <i class="fas fa-users-cog fa-2x info-link"></i>
               </a>
             </div>
           </div>
@@ -85,5 +88,11 @@
   </div>
 </template>
 <script>
-export default {};
+export default {
+  methods: {
+    signin() {
+        this.$router.push("/admin/products");
+    },
+  },
+};
 </script>

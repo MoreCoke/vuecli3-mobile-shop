@@ -19,7 +19,7 @@
           <td>{{item.create_at | date}}</td>
           <td>{{item.num}}</td>
           <td>
-            <ul>
+            <ul class="list-unstyled">
               <li
                 class="mb-2"
                 v-for="(orderproduct,index) in item.products"
@@ -28,7 +28,7 @@
             </ul>
           </td>
           <td>
-            <ul>
+            <ul class="list-unstyled">
               <li class="mb-2">
                 <div>
                   <p>買家姓名: {{item.user.name}}</p>

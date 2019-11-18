@@ -58,14 +58,14 @@
 </template>
 <script>
 export default {
-  // data() {
-  //   return {
-  //     imgpath: {
-  //       backgroundImage: "url(" + require("@/assets/img/4.jpg") + ")",
-  //       height: "600px",
-  //       position: "relative"
-  //     }
-  //   };
-  // }
+  data() {
+    return {
+      imgpath: {
+        backgroundImage: "url(" + require("@/assets/img/4.jpg") + ")",
+        height: "600px",
+        position: "relative"
+      }
+    };
+  }
 };
 </script>

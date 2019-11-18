@@ -29,11 +29,16 @@
                 to="/admin/coupons"
                 class="nav-link"
                 :class="{active :currentPath === 'Coupons'}"
-                href="#"
               >
                 <i class="fas fa-2x fa-ticket-alt mr-3"></i>
                 <span class="h3">折價券</span>
               </router-link>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link mx-2" @click.prevent="signout">
+                <i class="fas fa-sign-out-alt fa-2x mr-3"></i>
+                <span class="h3">登出</span>
+              </a>
             </li>
           </ul>
         </div>
@@ -78,6 +83,17 @@
 </template>
 <script>
 export default {
+  methods:{
+    signout() {
+      const api = `${process.env.APIPATH}logout`;
+      const vm = this;
+      this.$http.post(api).then(response => {
+        if (response.data.success) {
+          vm.$router.push("/guests/home");
+        }
+      });
+    }
+  },
   computed: {
     currentPath() {
       return this.$route.name;
