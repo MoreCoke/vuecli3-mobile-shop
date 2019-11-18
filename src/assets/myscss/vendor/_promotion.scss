@@ -13,6 +13,7 @@
   height: 150px;
   margin-bottom: 1rem;
   cursor: pointer;
+  transform: translateZ(-5px); // safari的transform會無視z-index
   @include media-breakpoint-up(md) {
     width: 150px;
     height: 200px;

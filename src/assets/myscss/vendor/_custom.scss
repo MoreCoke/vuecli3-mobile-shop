@@ -76,9 +76,9 @@ body,
 }
 .iphone-bgc{
   background-image: url(~@/assets/img/iPhone-11-Pro.jpg);
-  background-attachment: fixed;
   height: 30vh;
   @include media-breakpoint-up(md){
     height: 30vw;
+    background-attachment: fixed;
   }
 }
