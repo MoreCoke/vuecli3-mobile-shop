@@ -216,7 +216,7 @@ export default {
       serviceItem: [
         {
           imgpath: {
-            backgroundImage: "url(" + require("@/assets/img/7.jpg") + ")" // 3
+            backgroundImage: "url(" + require("@/assets/img/3.jpg") + ")" // 3
           },
           title: "3C手機",
           text: "款式多樣，應有盡有。",
@@ -225,7 +225,7 @@ export default {
         },
         {
           imgpath: {
-            backgroundImage: "url(" + require("@/assets/img/7.jpg") + ")" // 2
+            backgroundImage: "url(" + require("@/assets/img/2.jpg") + ")" // 2
           },
           title: "智慧手錶",
           text: "紀錄健康動起來!",
@@ -234,7 +234,7 @@ export default {
         },
         {
           imgpath: {
-            backgroundImage: "url(" + require("@/assets/img/7.jpg") + ")" // 1
+            backgroundImage: "url(" + require("@/assets/img/1.jpg") + ")" // 1
           },
           title: "無線藍芽耳機",
           text: "輕便小巧，簡單生活。",
