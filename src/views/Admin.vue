@@ -14,9 +14,9 @@
 </template>
 
 <script>
-import Sidebar from "../AdminSidebar";
-import Navbar from "../Navbar";
-import Alert from "../AlertMessage";
+import Sidebar from "@/components/AdminSidebar";
+import Navbar from "@/components/Navbar";
+import Alert from "@/components/AlertMessage";
 export default {
   components: {
     Sidebar,

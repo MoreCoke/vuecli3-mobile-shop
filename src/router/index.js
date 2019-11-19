@@ -15,12 +15,12 @@ const routes = [
   {
     path: '/login',
     name: 'Login',
-    component: () => import('@/components/views/Login'),
+    component: () => import('@/views/Login'),
   },
   {
     path: '/guest',
     name: 'Guest',
-    component: () => import('@/components/views/Guest'),
+    component: () => import('@/views/Guest'),
     children: [
       {
         path: 'home',
@@ -57,7 +57,7 @@ const routes = [
   {
     path: '/admin',
     name: 'Admin',
-    component: () => import('@/components/views/Admin'),
+    component: () => import('@/views/Admin'),
     children: [
       {
         path: 'products',

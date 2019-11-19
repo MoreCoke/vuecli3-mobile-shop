@@ -21,7 +21,8 @@
       <div class="swiper-pagination" slot="pagination"></div>
     </swiper>
     <section class="py-1 container-fluid">
-      <!-- <a href="#" class="service" @click.prevent v-for="(item,index) in serviceItem" :key="index">
+      <!-- <a href="#" class="service"
+       @click.prevent v-for="(item,index) in serviceItem" :key="index">
         <div class="service-item bg-cover" :style="item.imgpath">
           <div class="service-textzone">
             <h4 class="service-title">{{item.title}}</h4>
@@ -143,9 +144,9 @@
   </div>
 </template>
 <script>
-import $ from "jquery";
 import "swiper/dist/css/swiper.css";
 import { swiper, swiperSlide } from "vue-awesome-swiper";
+
 import adProduct from "../AdProductCard";
 export default {
   components: {
@@ -215,7 +216,7 @@ export default {
       serviceItem: [
         {
           imgpath: {
-            backgroundImage: "url(" + require("@/assets/img/3.jpg") + ")"
+            backgroundImage: "url(" + require("@/assets/img/7.jpg") + ")" // 3
           },
           title: "3C手機",
           text: "款式多樣，應有盡有。",
@@ -224,7 +225,7 @@ export default {
         },
         {
           imgpath: {
-            backgroundImage: "url(" + require("@/assets/img/2.jpg") + ")"
+            backgroundImage: "url(" + require("@/assets/img/7.jpg") + ")" // 2
           },
           title: "智慧手錶",
           text: "紀錄健康動起來!",
@@ -233,7 +234,7 @@ export default {
         },
         {
           imgpath: {
-            backgroundImage: "url(" + require("@/assets/img/1.jpg") + ")"
+            backgroundImage: "url(" + require("@/assets/img/7.jpg") + ")" // 1
           },
           title: "無線藍芽耳機",
           text: "輕便小巧，簡單生活。",
@@ -280,10 +281,7 @@ export default {
           text: "八核心處理器 | O 極限螢幕",
           routerpath: "/guest/productdetail/-Lse_PHBDKpMPI5kunSH",
           imgpath: {
-            backgroundImage:
-              "url(" +
-              require("@/assets/img/samsung_galaxy_note10_plus.jpg") +
-              ")"
+            backgroundImage:"url(" + require("@/assets/img/samsung_galaxy_note10_plus.jpg") +")"
           },
           logo: {
             backgroundImage: "url(" + require("@/assets/img/samsung.svg") + ")"
@@ -295,23 +293,23 @@ export default {
   },
   methods: {
     getData() {
-      let url = `${process.env.APIPATH}api/${process.env.CUSTOMPATH}/products/all`;
-      let vm = this;
-      vm.$http.get(url).then(response => {
+      const url = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_CUSTOMPATH}/products/all`;
+      const vm = this;
+      vm.$http.get(url).then((response) => {
         vm.getRandomProduct(...response.data.products);
       });
     },
     emitProductType(type, index) {
-      let vm = this;
+      const vm = this;
       this.$nextTick(() => {
         vm.$bus.$emit("HomeProductTypeIndex", type, index);
       });
     },
     getRandomProduct(...data) {
-      let vm = this;
-      let len = data.length;
+      const vm = this;
+      const len = data.length;
       while (vm.random.length < 9) {
-        let r = Math.floor(Math.random() * len);
+        const r = Math.floor(Math.random() * len);
         if (vm.random.indexOf(data[r]) === -1 && data[r].unit === "台") {
           vm.random.push(data[r]);
         }

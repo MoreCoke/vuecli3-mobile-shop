@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import Alert from "../AlertMessage";
+import Alert from "@/components/AlertMessage";
 export default {
   components:{
     Alert

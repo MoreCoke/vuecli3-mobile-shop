@@ -12,9 +12,9 @@
 </template>
 
 <script>
-import Navbar from "../Navbar";
-import Alert from "../AlertMessage";
-import Footer from "../Footer";
+import Navbar from "@/components/Navbar";
+import Alert from "@/components/AlertMessage";
+import Footer from "@/components/Footer";
 export default {
   components: {
     Navbar,
