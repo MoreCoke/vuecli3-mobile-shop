@@ -87,17 +87,17 @@ export default {
   },
   methods: {
     getOrderData(orderid) {
-      let vm = this;
-      let url = `${process.env.APIPATH}api/${process.env.CUSTOMPATH}/order/${orderid}`;
-      vm.$http.get(url).then(response => {
+      const vm = this;
+      const url = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_CUSTOMPATH}/order/${orderid}`;
+      vm.$http.get(url).then((response) => {
         vm.order = response.data.order;
       });
     },
     payOrder(orderid) {
-      let vm = this;
-      let url = `${process.env.APIPATH}api/${process.env.CUSTOMPATH}/pay/${orderid}`;
+      const vm = this;
+      const url = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_CUSTOMPATH}/pay/${orderid}`;
       vm.effect.orderLoading = true;
-      vm.$http.post(url).then(response => {
+      vm.$http.post(url).then((response) => {
         this.$bus.$emit("message:push", response.data.message, "success");
         vm.effect.orderLoading = false;
         vm.getOrderData(orderid);

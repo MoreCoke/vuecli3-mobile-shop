@@ -4,7 +4,9 @@
     <div class="row">
       <div class="col-md-5 d-flex flex-column justify-content-center align-items-center">
         <div class="boss-img"></div>
-        <p class="boss-text"><i class="fas fa-caret-up"></i>老闆喜歡帶筆電進電影院邊看電影邊工作，索性將總店開在戲院。</p>
+        <p class="boss-text">
+          <i class="fas fa-caret-up"></i>老闆喜歡帶筆電進電影院邊看電影邊工作，索性將總店開在戲院。
+        </p>
       </div>
       <div class="col-md-7">
         <div class="about-text">
@@ -34,7 +36,9 @@
         </div>
       </div>
       <div class="col-md-5">
-        <div class="shop-title"><i class="text-info fas fa-info-circle mr-3"></i>總店資訊</div>
+        <div class="shop-title">
+          <i class="text-info fas fa-info-circle mr-3"></i>總店資訊
+        </div>
         <div class="about-text">
           <p>
             <i class="text-info far fa-building mr-3"></i>總店 : 台北信義店

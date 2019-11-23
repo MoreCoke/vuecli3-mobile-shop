@@ -20,9 +20,9 @@
 <script>
 export default {
   props: ["active", "coupon"],
-  methods:{
-    toProductList(){
-      this.$router.push('/guest/productlist/全部品牌');
+  methods: {
+    toProductList() {
+      this.$router.push("/guest/productlist/全部品牌");
     }
   }
 };

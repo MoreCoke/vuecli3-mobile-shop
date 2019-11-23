@@ -27,8 +27,10 @@
             <span v-else>未啟用</span>
           </td>
           <td>
-            <button class="btn btn-outline-primary btn-sm" @click="openModal(false,item)">編輯</button>
-            <button class="btn btn-outline-danger btn-sm" @click="delModal(item)">刪除</button>
+            <button class="btn btn-outline-primary btn-sm"
+             @click="openModal(false,item)">編輯</button>
+            <button class="btn btn-outline-danger btn-sm"
+             @click="delModal(item)">刪除</button>
           </td>
         </tr>
       </tbody>
@@ -171,11 +173,10 @@ export default {
   },
   methods: {
     getCoupons(page = 1) {
-      let url = `${process.env.APIPATH}api/${process.env.CUSTOMPATH}/admin/coupons?page=${page}`; //'https://vue-course-api.hexschool.io/api/morecoke/products?page=:page';
-      let vm = this;
+      const url = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_CUSTOMPATH}/admin/coupons?page=${page}`;
+      const vm = this;
       vm.isLoading = true;
-      this.$http.get(url).then(response => {
-        console.log(response.data);
+      this.$http.get(url).then((response) => {
         vm.isLoading = false;
         vm.coupons = response.data.coupons;
         vm.pagination = response.data.pagination;
@@ -197,43 +198,40 @@ export default {
       $("#delCouponModal").modal("show");
     },
     updateCoupon() {
-      let api = `${process.env.APIPATH}api/${process.env.CUSTOMPATH}/admin/coupon`; 
+      let api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_CUSTOMPATH}/admin/coupon`;
       let httpMethod = "post";
       const vm = this;
       if (!vm.isNew) {
-        api = `${process.env.APIPATH}api/${process.env.CUSTOMPATH}/admin/coupon/${vm.tempCoupon.id}`;
+        api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_CUSTOMPATH}/admin/coupon/${vm.tempCoupon.id}`;
         httpMethod = "put";
       }
-      this.$http[httpMethod](api, { data: vm.tempCoupon }).then(response => {
-        console.log(response.data);
+      this.$http[httpMethod](api, { data: vm.tempCoupon }).then((response) => {
         if (response.data.success) {
           $("#couponModal").modal("hide");
-          vm.$bus.$emit('message:push',response.data.message,'success');
+          vm.$bus.$emit("message:push", response.data.message, "success");
           vm.getCoupons();
         } else {
           $("#couponModal").modal("hide");
-          vm.$bus.$emit('message:push',response.data.message,'warning');
+          vm.$bus.$emit("message:push", response.data.message, "warning");
           vm.getCoupons();
         }
       });
     },
     delCoupon() {
       const vm = this;
-      const api = `${process.env.APIPATH}api/${process.env.CUSTOMPATH}/admin/coupon/${vm.tempCoupon.id}`;
-      this.$http.delete(api, { data: vm.tempCoupon }).then(response => {
-        console.log(response.data);
+      const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_CUSTOMPATH}/admin/coupon/${vm.tempCoupon.id}`;
+      this.$http.delete(api, { data: vm.tempCoupon }).then((response) => {
         if (response.data.success) {
           $("#delCouponModal").modal("hide");
-          vm.$bus.$emit('message:push',response.data.message,'success');
+          vm.$bus.$emit("message:push", response.data.message, "success");
           vm.getCoupons();
         } else {
           $("#delCouponModal").modal("hide");
-          vm.$bus.$emit('message:push',response.data.message,'warning');
+          vm.$bus.$emit("message:push", response.data.message, "warning");
           vm.getCoupons();
-          console.log("新增失敗");
         }
       });
-    },
+    }
   },
   created() {
     this.getCoupons();

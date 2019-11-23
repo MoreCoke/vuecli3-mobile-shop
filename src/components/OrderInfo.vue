@@ -122,12 +122,12 @@ export default {
   },
   methods: {
     sentOrderData() {
-      let vm = this;
-      let url = `${process.env.APIPATH}api/${process.env.CUSTOMPATH}/order`;
-      this.$validator.validate().then(valid => {
+      const vm = this;
+      const url = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_CUSTOMPATH}/order`;
+      this.$validator.validate().then((valid) => {
         if (valid) {
           vm.effect.isLoading = true;
-          vm.$http.post(url, { data: vm.form }).then(response => {
+          vm.$http.post(url, { data: vm.form }).then((response) => {
             if (response.data.success) {
               vm.$bus.$emit("message:push", response.data.message, "success");
               vm.toOrderFinished(response.data.orderId);
@@ -145,7 +145,6 @@ export default {
       this.$router.push("/guest/productorder/check");
     },
     toOrderFinished(id) {
-      let vm = this;
       this.$router.push({
         path: "/guest/productorder/finished",
         query: { orderid: id }

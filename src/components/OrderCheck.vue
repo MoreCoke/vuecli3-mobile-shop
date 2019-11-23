@@ -125,6 +125,7 @@
 </template>
 <script>
 import $ from "jquery";
+
 export default {
   props: ["cartData"],
   data() {
@@ -138,18 +139,18 @@ export default {
   },
   methods: {
     delCartData(id) {
-      let vm = this;
-      let url = `${process.env.APIPATH}api/${process.env.CUSTOMPATH}/cart/${id}`;
+      const vm = this;
+      const url = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_CUSTOMPATH}/cart/${id}`;
       vm.effect.currentLoading = id;
-      vm.$http.delete(url).then(response => {
+      vm.$http.delete(url).then((response) => {
         vm.$emit("updateCart");
         vm.effect.currentLoading = "";
         vm.$bus.$emit("message:push", response.data.message, "warning");
       });
     },
     useCoupon() {
-      let vm = this;
-      let url = `${process.env.APIPATH}api/${process.env.CUSTOMPATH}/coupon`;
+      const vm = this;
+      const url = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_CUSTOMPATH}/coupon`;
       vm.effect.couponLoading = true;
       vm.$http
         .post(url, {
@@ -157,7 +158,7 @@ export default {
             code: vm.couponCode
           }
         })
-        .then(response => {
+        .then((response) => {
           if (response.data.success) {
             vm.$emit("updateCart");
             vm.$bus.$emit("message:push", response.data.message, "success");
@@ -178,19 +179,19 @@ export default {
   },
   computed: {
     getToday() {
-      let day = new Date();
-      let today = `${day.getMonth() + 1}/${day.getDate()}`;
+      const day = new Date();
+      const today = `${day.getMonth() + 1}/${day.getDate()}`;
       return today;
     },
     getCouponData() {
-      let coupon = JSON.parse(localStorage.getItem("coupon"));
+      const coupon = JSON.parse(localStorage.getItem("coupon"));
       let couponInfo;
       if (coupon) {
         couponInfo = `請輸入${coupon.title.replace(/折價券/, "價碼")}: <br>${
           coupon.code
         }`;
       } else {
-        couponInfo = `請輸入95折扣碼: <br>iloveflash`;
+        couponInfo = "請輸入95折扣碼: <br>iloveflash";
       }
       return couponInfo;
     }

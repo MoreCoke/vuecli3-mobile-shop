@@ -19,25 +19,31 @@ export default {
   methods: {
     classifyBrand(brand) {
       return {
-        backgroundImage: "url("+require(`@/assets/img/${brand}.svg`)+")",
-      }
+        backgroundImage: `url(/img/${brand}.svg)`
+      };
     },
     classifyType(unit) {
-      let type =unit;
-      switch(type){
-        case '台':
-          return '手機';
-        case '支':
-          return '手錶';
-        case '組':
-          return '耳機';
+      let type;
+      switch (unit) {
+        case "台":
+          type = "手機";
+          break;
+        case "支":
+          type = "手錶";
+          break;
+        case "組":
+          type = "耳機";
+          break;
+        default:
+          break;
       }
+      return type;
     },
-    goProductDetail(productid){
+    goProductDetail(productid) {
       this.$router.push({
-        name:'Productdetail',
-        params: { id: productid },
-      })
+        name: "Productdetail",
+        params: { id: productid }
+      });
     }
   }
 };

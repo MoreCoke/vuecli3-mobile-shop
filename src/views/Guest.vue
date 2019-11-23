@@ -15,6 +15,7 @@
 import Navbar from "@/components/Navbar";
 import Alert from "@/components/AlertMessage";
 import Footer from "@/components/Footer";
+
 export default {
   components: {
     Navbar,

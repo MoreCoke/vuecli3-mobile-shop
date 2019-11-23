@@ -6,10 +6,10 @@
           <div class="d-flex flex-column justify-content-center h-100">
             <span class="text-white h5 text-center mb-4">僅用做學習，禁止任何商業用途</span>
             <div class="d-flex justify-content-center align=items-center">
-              <a href="https://github.com/MoreCoke/Vue-test" class="mx-2">
+              <a href="https://github.com/MoreCoke" class="mx-2" target="_blank">
                 <i class="fab fa-lg fa-github fa-2x info-link"></i>
               </a>
-              <a href="https://codepen.io/moreCoke" class="mx-2">
+              <a href="https://codepen.io/moreCoke" class="mx-2" target="_blank">
                 <i class="fab fa-codepen fa-2x info-link"></i>
               </a>
               <a href="#" class="mx-2" @click.prevent="signin">
@@ -91,8 +91,8 @@
 export default {
   methods: {
     signin() {
-        this.$router.push("/admin/products");
-    },
-  },
+      this.$router.push("/admin/products");
+    }
+  }
 };
 </script>

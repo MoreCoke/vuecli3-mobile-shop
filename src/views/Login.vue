@@ -34,8 +34,9 @@
 
 <script>
 import Alert from "@/components/AlertMessage";
+
 export default {
-  components:{
+  components: {
     Alert
   },
   data() {
@@ -44,19 +45,19 @@ export default {
         username: "",
         password: ""
       },
-      logo: require("@/assets/img/logo.png")
+      logo: "/img/logo.png"
     };
   },
   methods: {
     signin() {
-      const api = `${process.env.APIPATH}admin/signin`; //'https://vue-course-api.hexschool.io/api/morecoke/products?page=:page';
+      const api = `${process.env.VUE_APP_APIPATH}admin/signin`;
       const vm = this;
-      this.$http.post(api, vm.user).then(response => {
+      this.$http.post(api, vm.user).then((response) => {
         if (response.data.success) {
           vm.$router.push("/admin/products");
-          vm.$bus.$emit('message:push',response.data.message,'success');
-        }else{
-          vm.$bus.$emit('message:push',response.data.message,'warning');
+          vm.$bus.$emit("message:push", response.data.message, "success");
+        } else {
+          vm.$bus.$emit("message:push", response.data.message, "warning");
         }
       });
     }

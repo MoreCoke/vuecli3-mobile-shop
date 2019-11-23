@@ -146,8 +146,8 @@
 <script>
 import "swiper/dist/css/swiper.css";
 import { swiper, swiperSlide } from "vue-awesome-swiper";
-
 import adProduct from "../AdProductCard";
+
 export default {
   components: {
     swiper,
@@ -202,11 +202,11 @@ export default {
       ],
       otherbgc: [
         {
-          imgpath: require("@/assets/img/hweil_p30pro.png")
+          imgpath: "/img/hweil_p30pro.png"
         },
         {
           imgpath: {
-            backgroundImage: "url(" + require("@/assets/img/6.jpg") + ")"
+            backgroundImage: "url(/img/6.jpg)"
           },
           title: "優惠折扣",
           text: "玩小遊戲抽折扣!",
@@ -216,7 +216,8 @@ export default {
       serviceItem: [
         {
           imgpath: {
-            backgroundImage: "url(" + require("@/assets/img/3.jpg") + ")" // 3
+            // backgroundImage: "url(" + require("@/assets/img/3.jpg") + ")" // 3
+            backgroundImage: "url(/img/3.jpg)"
           },
           title: "3C手機",
           text: "款式多樣，應有盡有。",
@@ -225,7 +226,8 @@ export default {
         },
         {
           imgpath: {
-            backgroundImage: "url(" + require("@/assets/img/2.jpg") + ")" // 2
+            // backgroundImage: "url(" + require("@/assets/img/7.jpg") + ")" // 2
+            backgroundImage: "url(/img/1.jpg)"
           },
           title: "智慧手錶",
           text: "紀錄健康動起來!",
@@ -234,7 +236,8 @@ export default {
         },
         {
           imgpath: {
-            backgroundImage: "url(" + require("@/assets/img/1.jpg") + ")" // 1
+            // backgroundImage: "url(" + require("@/assets/img/7.jpg") + ")" // 1
+            backgroundImage: "url(/img/1.jpg)"
           },
           title: "無線藍芽耳機",
           text: "輕便小巧，簡單生活。",
@@ -243,7 +246,8 @@ export default {
         },
         {
           imgpath: {
-            backgroundImage: "url(" + require("@/assets/img/7.jpg") + ")"
+            // backgroundImage: "url(" + require("@/assets/img/7.jpg") + ")"
+            backgroundImage: "url(/img/7.jpg)"
           },
           title: "所有商品",
           text: "種類豐富，應有盡有!",
@@ -257,11 +261,13 @@ export default {
           text: "後置三鏡頭 | 5.8 吋 OLED",
           routerpath: "/guest/productdetail/-LseWhNSDZAaoE-L2VqN",
           imgpath: {
-            backgroundImage:
-              "url(" + require("@/assets/img/iphone11pro.jpg") + ")"
+            // backgroundImage:
+            //   "url(" + require("@/assets/img/iphone11pro.jpg") + ")"
+            backgroundImage: "url(/img/iphone11pro.jpg)"
           },
           logo: {
-            backgroundImage: "url(" + require("@/assets/img/apple.svg") + ")"
+            // backgroundImage: "url(" + require("@/assets/img/apple.svg") + ")"
+            backgroundImage: "url(/img/apple.svg)"
           }
         },
         {
@@ -269,11 +275,13 @@ export default {
           text: "眼控對焦 | 八核心處理",
           routerpath: "/guest/productdetail/-LrnKPvMhdwPiRhofsjQ",
           imgpath: {
-            backgroundImage:
-              "url(" + require("@/assets/img/xperia-5-primary.png") + ")"
+            // backgroundImage:
+            //   "url(" + require("@/assets/img/xperia-5-primary.png") + ")"
+            backgroundImage: "url(/img/xperia-5-primary.png)"
           },
           logo: {
-            backgroundImage: "url(" + require("@/assets/img/sony.svg") + ")"
+            // backgroundImage: "url(" + require("@/assets/img/sony.svg") + ")"
+            backgroundImage: "url(/img/sony.svg)"
           }
         },
         {
@@ -281,10 +289,12 @@ export default {
           text: "八核心處理器 | O 極限螢幕",
           routerpath: "/guest/productdetail/-Lse_PHBDKpMPI5kunSH",
           imgpath: {
-            backgroundImage:"url(" + require("@/assets/img/samsung_galaxy_note10_plus.jpg") +")"
+            // backgroundImage:"url(" + require("@/assets/img/samsung_galaxy_note10_plus.jpg") +")"
+            backgroundImage: "url(/img/samsung_galaxy_note10_plus.jpg)"
           },
           logo: {
-            backgroundImage: "url(" + require("@/assets/img/samsung.svg") + ")"
+            // backgroundImage: "url(" + require("@/assets/img/samsung.svg") + ")"
+            backgroundImage: "url(/img/samsung.svg)"
           }
         }
       ],
@@ -292,6 +302,7 @@ export default {
     };
   },
   methods: {
+    // 取得所有商品資料
     getData() {
       const url = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_CUSTOMPATH}/products/all`;
       const vm = this;
@@ -299,12 +310,14 @@ export default {
         vm.getRandomProduct(...response.data.products);
       });
     },
+    // 根據首頁點選商品送出相對的index
     emitProductType(type, index) {
       const vm = this;
       this.$nextTick(() => {
         vm.$bus.$emit("HomeProductTypeIndex", type, index);
       });
     },
+    // 取得汰舊換新的隨機推薦手機
     getRandomProduct(...data) {
       const vm = this;
       const len = data.length;

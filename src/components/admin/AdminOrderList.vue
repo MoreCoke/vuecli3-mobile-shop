@@ -24,7 +24,8 @@
                 class="mb-2"
                 v-for="(orderproduct,index) in item.products"
                 :key="`orderproduct-${index}`"
-              >{{orderproduct.product.title}} : {{orderproduct.qty}} {{orderproduct.product.unit}}</li>
+              >{{orderproduct.product.title}} : {{orderproduct.qty}} {{orderproduct.product.unit}}
+              </li>
             </ul>
           </td>
           <td>
@@ -135,7 +136,8 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">取消</button>
-            <button type="button" class="btn btn-primary" @click="updateOrder(tempOrder.id)">確認</button>
+            <button type="button" class="btn btn-primary"
+             @click="updateOrder(tempOrder.id)">確認</button>
           </div>
         </div>
       </div>
@@ -145,6 +147,7 @@
 <script>
 import $ from "jquery";
 import Pagination from "../Pagination";
+
 export default {
   components: {
     Pagination
@@ -159,11 +162,10 @@ export default {
   },
   methods: {
     getOrders(page = 1) {
-      let url = `${process.env.APIPATH}api/${process.env.CUSTOMPATH}/orders?page=${page}`;
-      let vm = this;
+      const url = `${process.env.APIPATH}api/${process.env.CUSTOMPATH}/orders?page=${page}`;
+      const vm = this;
       vm.isLoading = true;
-      this.$http.get(url).then(response => {
-        console.log(response.data);
+      this.$http.get(url).then((response) => {
         vm.isLoading = false;
         vm.orders = response.data.orders;
         vm.pagination = response.data.pagination;
@@ -174,11 +176,10 @@ export default {
       $("#orderModal").modal("show");
     },
     updateOrder(id) {
-      let url = `${process.env.APIPATH}api/${process.env.CUSTOMPATH}/admin/order/${id}`;
-      let vm = this;
-      this.$http.put(url, { data: vm.tempOrder }).then(response => {
+      const url = `${process.env.APIPATH}api/${process.env.CUSTOMPATH}/admin/order/${id}`;
+      const vm = this;
+      this.$http.put(url, { data: vm.tempOrder }).then((response) => {
         if (response.data.success) {
-          console.log(response);
           $("#orderModal").modal("hide");
           vm.$bus.$emit("message:push", response.data.message, "success");
           vm.getOrders();

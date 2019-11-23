@@ -34,6 +34,7 @@
 </template>
 <script>
 import EndGame from "../EndGame";
+
 export default {
   components: {
     EndGame
@@ -48,16 +49,16 @@ export default {
           code: "iloveflash"
         },
         {
-          title: '8折折價券',
-          code: 'bhgynbmvgt'
+          title: "8折折價券",
+          code: "bhgynbmvgt"
         },
         {
-          title:'85折折價券',
-          code:'jkughjukj'
+          title: "85折折價券",
+          code: "jkughjukj"
         },
         {
-          title:'9折折價券',
-          code:'asdfedfrgd'
+          title: "9折折價券",
+          code: "asdfedfrgd"
         }
       ],
       randomCoupon: {},
@@ -69,16 +70,16 @@ export default {
   },
   methods: {
     getData() {
-      let url = `${process.env.APIPATH}api/${process.env.CUSTOMPATH}/products/all`;
-      let vm = this;
+      const url = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_CUSTOMPATH}/products/all`;
+      const vm = this;
       vm.effect.isLoading = true;
-      vm.$http.get(url).then(response => {
+      vm.$http.get(url).then((response) => {
         vm.effect.isLoading = false;
         vm.getRandom(...response.data.products);
       });
     },
     // getCoupons(page = 1) {
-    //   let url = `${process.env.APIPATH}api/${process.env.CUSTOMPATH}/admin/coupons?page=${page}`; //'https://vue-course-api.hexschool.io/api/morecoke/products?page=:page';
+    //   let url = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_CUSTOMPATH}/admin/coupons?page=${page}`; //"https://vue-course-api.hexschool.io/api/morecoke/products?page=:page";
     //   let vm = this;
     //   vm.effect.isLoading = true;
     //   this.$http.get(url).then(response => {
@@ -87,10 +88,10 @@ export default {
     //   });
     // },
     getRandom(...data) {
-      let vm = this;
-      let len = data.length;
-      let newData = data.map(function(item) {
-        let obj = {};
+      const vm = this;
+      const len = data.length;
+      const newData = data.map((item) => {
+        const obj = {};
         obj.title = item.title;
         obj.imgUrl = item.imgUrl;
         obj.flipped = false;
@@ -98,7 +99,7 @@ export default {
         return obj;
       });
       while (vm.random.length < 6) {
-        let r = Math.floor(Math.random() * len);
+        const r = Math.floor(Math.random() * len);
         if (vm.random.indexOf(newData[r]) === -1) {
           vm.random.push(newData[r]);
         }
@@ -106,15 +107,15 @@ export default {
       vm.createRandomCard();
     },
     createRandomCard() {
-      let vm = this;
-      let len = vm.random.length;
+      const vm = this;
+      const len = vm.random.length;
       while (vm.randomCards.length < 6) {
-        let r = Math.floor(Math.random() * len);
+        const r = Math.floor(Math.random() * len);
         if (vm.randomCards.indexOf(vm.random[r]) === -1) {
           vm.randomCards.push(vm.random[r]);
         }
       }
-      let newRandomCards = JSON.parse(JSON.stringify(vm.randomCards));
+      const newRandomCards = JSON.parse(JSON.stringify(vm.randomCards));
       vm.randomCards = newRandomCards.concat(vm.randomCards);
       vm.shuffleRandomCards();
     },
@@ -122,22 +123,21 @@ export default {
       this.randomCards.sort(() => Math.random());
     },
     flippedCard(card) {
-      let vm = this;
+      const vm = this;
       let flippedLen;
-      if (card.flipped || card.found) return;
-      else {
-        flippedLen = this.randomCards.filter(card => card.flipped).length;
-        if (flippedLen == 0) {
+      if (!card.flipped || !card.found) {
+        flippedLen = this.randomCards.filter(flipcard => flipcard.flipped).length;
+        if (flippedLen === 0) {
           card.flipped = true;
-        } else if (flippedLen == 1) {
+        } else if (flippedLen === 1) {
           card.flipped = true;
           vm.checkSameCards();
         }
       }
     },
     checkSameCards() {
-      let vm = this;
-      let flippedCards = this.randomCards.filter(card => card.flipped);
+      const vm = this;
+      const flippedCards = this.randomCards.filter(card => card.flipped);
       if (flippedCards[0].title === flippedCards[1].title) {
         flippedCards[0].found = true;
         flippedCards[1].found = true;
@@ -149,31 +149,31 @@ export default {
       }, 1000);
     },
     checkFoundCards() {
-      let vm = this;
-      let allCardsLen = vm.randomCards.length;
-      let foundCardsLen = vm.randomCards.filter(card => card.found).length;
+      const vm = this;
+      const allCardsLen = vm.randomCards.length;
+      const foundCardsLen = vm.randomCards.filter(card => card.found).length;
       if (allCardsLen === foundCardsLen) {
         vm.getRandomCoupon();
       }
     },
     getRandomCoupon() {
-      let vm = this;
-      let r = Math.floor(Math.random() * vm.coupons.length);
+      const vm = this;
+      const r = Math.floor(Math.random() * vm.coupons.length);
       vm.randomCoupon = vm.coupons[r];
       setTimeout(() => {
         vm.gameOver();
       }, 2000);
     },
     gameOver() {
-      let vm = this;
+      const vm = this;
       vm.gameover = true;
-      // vm.$bus.$emit('message:push', `恭喜你獲得${vm.randomCoupon.title}`, 'success');
+      // vm.$bus.$emit("message:push", `恭喜你獲得${vm.randomCoupon.title}`, "success");
       localStorage.setItem("coupon", JSON.stringify(vm.randomCoupon));
     }
   },
   created() {
     this.getData();
     // this.getCoupons();
-  },
+  }
 };
 </script>

@@ -50,7 +50,7 @@
                 >目前金額: {{product.price*qty | currency}}</span>
                 <span class="detail-current-price mr-3" v-else>單次消費限購3台!</span>
               </div>
-              <button class="btn btn-primary" @click="checkCart(product['id'],qty)">
+              <button class="btn btn-primary" @click="checkCart(product['id'],qty)" :disabled="product.id === effect.currentLoading">
                 <i class="fas fa-spinner fa-spin" v-if="product.id === effect.currentLoading"></i>
                 <i class="fas fa-shopping-cart pr-2" v-else></i>
                 加入購物車
@@ -86,7 +86,7 @@
                   </div>
                   <div class="w-100 d-flex justify-content-end align-items-center">
                     <span class="listitem-total mr-3">{{item.total | currency}}</span>
-                    <button class="btn btn-outline-info" @click="delCartData(item.id,true)">
+                    <button class="btn btn-outline-info" @click="delCartData(item.id,true)" :disabled="item.id === effect.currentLoading">
                       <i class="fas fa-spinner fa-spin" v-if="item.id === effect.currentLoading"></i>
                       <i class="fas fa-trash-alt" v-else></i>
                     </button>
@@ -96,7 +96,11 @@
             </ul>
             <div class="cart-total">
               <span class="mr-2">總計金額:{{cartProducts.total | currency}}</span>
-              <button class="btn btn-info mt-3 mt-xl-0" :disabled="cartProductsNum === 0" @click="toOrderCheck">
+              <button
+                class="btn btn-info mt-3 mt-xl-0"
+                :disabled="cartProductsNum === 0"
+                @click="toOrderCheck"
+              >
                 <i class="fas fa-cash-register mr-2"></i>結帳去
               </button>
             </div>
@@ -123,6 +127,7 @@
 <script>
 import ProductCard from "../ProductCard";
 import Cart from "../Cart";
+
 export default {
   components: {
     ProductCard,
@@ -142,61 +147,63 @@ export default {
     };
   },
   methods: {
-    //取得產品細節資料
+    // 取得產品細節資料
+    /* eslint-disable prefer-destructuring */
     getProductDetail() {
-      let vm = this;
-      let id = vm.$route.params.id;
-      let url = `${process.env.APIPATH}api/${process.env.CUSTOMPATH}/product/${id}`;
+      const vm = this;
+      const id = vm.$route.params.id;
+      const url = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_CUSTOMPATH}/product/${id}`;
       vm.effect.isLoading = true;
-      vm.$http.get(url).then(response => {
+      vm.$http.get(url).then((response) => {
         vm.product = response.data.product;
         // vm.images.normal_size[0].url = vm.product.imgUrl;
         vm.getData();
         vm.effect.isLoading = false;
       });
     },
-    //取得全部商品
+    /* eslint-enable prefer-destructuring */
+
+    // 取得全部商品
     getData() {
-      let url = `${process.env.APIPATH}api/${process.env.CUSTOMPATH}/products/all`;
-      let vm = this;
+      const url = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_CUSTOMPATH}/products/all`;
+      const vm = this;
       let products = [];
-      vm.$http.get(url).then(response => {
-        products = response.data.products;
+      vm.$http.get(url).then((response) => {
+        products = [...response.data.products];
         vm.getRandomProduct(...products);
       });
     },
-    //從全部商品抽取隨機商品
+    // 從全部商品抽取隨機商品
     getRandomProduct(...data) {
-      let vm = this;
-      let len = data.length;
+      const vm = this;
+      const len = data.length;
       vm.random = [];
       while (vm.random.length < 3) {
-        let r = Math.floor(Math.random() * len);
+        const r = Math.floor(Math.random() * len);
         if (vm.random.indexOf(data[r]) === -1 && vm.product.id !== data[r].id) {
           vm.random.push(data[r]);
         }
       }
     },
-    //根據品牌替換logo
+    // 根據品牌替換logo
     classifyBrand() {
       return {
-        backgroundImage:
-          "url(" + require(`@/assets/img/${this.product.category}.svg`) + ")"
+        backgroundImage: `url(/img/${this.product.category}.svg)`
       };
     },
-    //取得當前購物車資料
+    // 取得當前購物車資料
     getCartData() {
-      let vm = this;
-      let url = `${process.env.APIPATH}api/${process.env.CUSTOMPATH}/cart`;
-      vm.$http.get(url).then(response => {
+      const vm = this;
+      const url = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
+      vm.$http.get(url).then((response) => {
         vm.cartProducts = response.data.data;
         vm.cartProductsNum = response.data.data.carts.length;
       });
     },
-    //將商品和購買數量加入購物車
+    // 將商品和購買數量加入購物車
     addToCart(id, qty) {
-      let vm = this;
-      let url = `${process.env.APIPATH}api/${process.env.CUSTOMPATH}/cart`;
+      const vm = this;
+      const url = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
       if (qty > 3) {
         qty = 3;
         vm.$bus.$emit("每款商品限購3個", "warning");
@@ -206,18 +213,18 @@ export default {
         qty
       };
       vm.effect.currentLoading = id;
-      vm.$http.post(url, { data: cart }).then(response => {
+      vm.$http.post(url, { data: cart }).then((response) => {
         vm.getCartData();
         vm.effect.currentLoading = "";
         vm.$bus.$emit("message:push", response.data.message, "success");
       });
     },
-    //根據id刪除當前商品
+    // 根據id刪除當前商品
     delCartData(id, showmessage) {
-      let vm = this;
-      let url = `${process.env.APIPATH}api/${process.env.CUSTOMPATH}/cart/${id}`;
+      const vm = this;
+      const url = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_CUSTOMPATH}/cart/${id}`;
       vm.effect.currentLoading = id;
-      vm.$http.delete(url).then(response => {
+      vm.$http.delete(url).then((response) => {
         vm.getCartData();
         vm.effect.currentLoading = "";
         if (showmessage) {
@@ -225,14 +232,14 @@ export default {
         }
       });
     },
-    //檢查購物車是否有相同商品
+    // 檢查購物車是否有相同商品
     checkCart(id, qty) {
-      let vm = this;
+      const vm = this;
       let sameProductNum = qty;
-      let sameProduct = vm.cartProducts.carts.find(
+      const sameProduct = vm.cartProducts.carts.find(
         item => item.product.id === id
       );
-      //如果購物車有相同商品
+      // 如果購物車有相同商品
       if (typeof sameProduct !== "undefined") {
         sameProductNum += sameProduct.qty;
         if (sameProductNum > 3) {
@@ -246,11 +253,13 @@ export default {
         vm.addToCart(id, qty);
       }
     },
+    // 使用正規表達將商品介紹的文字進行渲染
     regexpSetting(txt) {
       return txt
         .replace(/(.{1,}\n\b)/g, "<span class='description-title'>$1</span>")
         .replace(/\n/g, "<br>");
     },
+    // 進入結帳頁面
     toOrderCheck() {
       if (this.cartProductsNum > 0) {
         this.$router.push("/guest/productorder/check");

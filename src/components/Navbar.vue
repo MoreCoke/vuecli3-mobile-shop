@@ -67,13 +67,14 @@
 
 <script>
 import $ from "jquery";
+
 export default {
   data() {
     return {
-      logo: require("@/assets/img/logo.png"),
+      logo: "/img/logo.png",
       objClass: {
         open: false
-      },
+      }
     };
   },
   methods: {
@@ -81,26 +82,26 @@ export default {
       this.$router.push("/guest/productlist/全部品牌");
       this.hideNavbar();
     },
-    toAboutUs(){
+    toAboutUs() {
       this.$router.push("/guest/aboutus");
       this.hideNavbar();
     },
-    toPromotion(){
+    toPromotion() {
       this.$router.push("/guest/promotion");
       this.hideNavbar();
     },
-    navAnimation() {
-      $(window).scroll(function() {
-        $(".customnav").toggleClass("scrolled", $(this).scrollTop() > 20);
-      });
-    },
+    // navAnimation() {
+    //   $(window).scroll(function () {
+    //     $(".customnav").toggleClass("scrolled", $(this).scrollTop() > 20);
+    //   });
+    // },
     hideNavbar() {
       $("#mynav").collapse("hide");
       this.objClass.open = false;
     }
-  },
-  mounted() {
-    this.navAnimation();
   }
+  // mounted() {
+  //   this.navAnimation();
+  // }
 };
 </script>

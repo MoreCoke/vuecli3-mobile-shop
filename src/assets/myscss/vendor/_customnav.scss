@@ -9,7 +9,7 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  background-color: $secondary;
+  background: $primary;//linear-gradient(to bottom,lighten($primary,15%),$primary);
   padding: 1rem;
   transition: all 0.5s ease 0s;
   @include media-breakpoint-up(lg) {
@@ -91,10 +91,10 @@
     padding-top: 106px !important;
   }
 }
-.scrolled {
-  background-color: $primary;
-  transition: all 0.5s ease 0s;
-}
+// .scrolled {
+//   background-color: $primary;
+//   transition: all 0.5s ease 0s;
+// }
 .animated-icon {
   width: 30px;
   height: 20px;

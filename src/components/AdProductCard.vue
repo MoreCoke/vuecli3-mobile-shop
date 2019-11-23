@@ -12,6 +12,6 @@
 </template>
 <script>
 export default {
-  props:['adcard'],
-}
+  props: ["adcard"]
+};
 </script>

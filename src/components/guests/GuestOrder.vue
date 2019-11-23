@@ -32,6 +32,7 @@
 import OrderCheck from "../OrderCheck";
 import OrderInfo from "../OrderInfo";
 import OrderFinished from "../OrderFinished";
+
 export default {
   components: {
     OrderCheck,
@@ -50,15 +51,17 @@ export default {
     };
   },
   methods: {
+    // 取得當前購物車資料
     getCartData() {
-      let vm = this;
-      let url = `${process.env.APIPATH}api/${process.env.CUSTOMPATH}/cart`;
+      const vm = this;
+      const url = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
       vm.effect.isLoading = true;
-      vm.$http.get(url).then(response => {
+      vm.$http.get(url).then((response) => {
         vm.cartProducts = response.data.data;
         vm.effect.isLoading = false;
       });
     },
+    // 追蹤當前結帳步驟，用來渲染相對應的組件
     checkStep() {
       this.step = this.$route.params.step;
     }

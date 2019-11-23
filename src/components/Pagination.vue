@@ -37,7 +37,7 @@
 
 <script>
 export default {
-  name:"Product",
+  name: "Product",
   props: ["propPage"]
 };
 </script>
