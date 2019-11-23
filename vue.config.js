@@ -1,3 +1,5 @@
 module.exports = {
-  publicPath: "/vuecli3-mobile-shop/"
+  publicPath: process.env.NODE_ENV === "production"
+    ? "/vuecli3-mobile-shop/"
+    : "/"
 };
