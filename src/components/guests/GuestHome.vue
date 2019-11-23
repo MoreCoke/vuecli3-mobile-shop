@@ -21,20 +21,11 @@
       <div class="swiper-pagination" slot="pagination"></div>
     </swiper>
     <section class="py-1 container-fluid">
-      <!-- <a href="#" class="service"
-       @click.prevent v-for="(item,index) in serviceItem" :key="index">
-        <div class="service-item bg-cover" :style="item.imgpath">
+      <router-link class="service" :to="otherbgc[0].routerPath">
+        <div class="service-discount bg-cover" :style="compileImgPath(otherbgc[0].img)">
           <div class="service-textzone">
-            <h4 class="service-title">{{item.title}}</h4>
-            <h5 class="service-subtitle">{{item.text}}</h5>
-          </div>
-        </div>
-      </a>-->
-      <router-link class="service" :to="otherbgc[1].routerPath">
-        <div class="service-discount bg-cover" :style="otherbgc[1].imgpath">
-          <div class="service-textzone">
-            <h4 class="service-title">{{otherbgc[1].title}}</h4>
-            <h5 class="service-subtitle">{{otherbgc[1].text}}</h5>
+            <h4 class="service-title">{{otherbgc[0].title}}</h4>
+            <h5 class="service-subtitle">{{otherbgc[0].text}}</h5>
           </div>
         </div>
       </router-link>
@@ -45,7 +36,7 @@
         to="/guest/productlist/全部品牌"
         @click.native="emitProductType(item['typeName'],item['typeIndex'])"
       >
-        <div class="service-item bg-cover" :style="item.imgpath">
+        <div class="service-item bg-cover" :style="compileImgPath(item.img)">
           <div class="service-textzone">
             <h4 class="service-title">{{item.title}}</h4>
             <h5 class="service-subtitle">{{item.text}}</h5>
@@ -104,7 +95,7 @@
       <div class="container">
         <div class="row align-items-center">
           <div class="col-md-6">
-            <img class="renew-imgcenter" :src="otherbgc[0].imgpath" alt />
+            <img class="renew-imgcenter" :src="`${publicPath}img/hweil_p30pro.png`" alt />
           </div>
           <div class="col-md-6">
             <div class="row">
@@ -156,6 +147,7 @@ export default {
   },
   data() {
     return {
+      publicPath: process.env.BASE_URL,
       swiperOption: {
         loop: true,
         pagination: {
@@ -202,12 +194,7 @@ export default {
       ],
       otherbgc: [
         {
-          imgpath: "/img/hweil_p30pro.png"
-        },
-        {
-          imgpath: {
-            backgroundImage: "url(/img/6.jpg)"
-          },
+          img: "6.jpg",
           title: "優惠折扣",
           text: "玩小遊戲抽折扣!",
           routerPath: "/guest/promotion"
@@ -215,40 +202,28 @@ export default {
       ],
       serviceItem: [
         {
-          imgpath: {
-            // backgroundImage: "url(" + require("@/assets/img/3.jpg") + ")" // 3
-            backgroundImage: "url(/img/3.jpg)"
-          },
+          img: "3.jpg",
           title: "3C手機",
           text: "款式多樣，應有盡有。",
           typeIndex: 1,
           typeName: "手機"
         },
         {
-          imgpath: {
-            // backgroundImage: "url(" + require("@/assets/img/7.jpg") + ")" // 2
-            backgroundImage: "url(/img/1.jpg)"
-          },
+          img: "2.jpg",
           title: "智慧手錶",
           text: "紀錄健康動起來!",
           typeIndex: 2,
           typeName: "手錶"
         },
         {
-          imgpath: {
-            // backgroundImage: "url(" + require("@/assets/img/7.jpg") + ")" // 1
-            backgroundImage: "url(/img/1.jpg)"
-          },
+          img: "1.jpg",
           title: "無線藍芽耳機",
           text: "輕便小巧，簡單生活。",
           typeIndex: 3,
           typeName: "耳機"
         },
         {
-          imgpath: {
-            // backgroundImage: "url(" + require("@/assets/img/7.jpg") + ")"
-            backgroundImage: "url(/img/7.jpg)"
-          },
+          img: "7.jpg",
           title: "所有商品",
           text: "種類豐富，應有盡有!",
           typeIndex: 0,
@@ -260,42 +235,22 @@ export default {
           name: "iPhone 11 Pro",
           text: "後置三鏡頭 | 5.8 吋 OLED",
           routerpath: "/guest/productdetail/-LseWhNSDZAaoE-L2VqN",
-          imgpath: {
-            // backgroundImage:
-            //   "url(" + require("@/assets/img/iphone11pro.jpg") + ")"
-            backgroundImage: "url(/img/iphone11pro.jpg)"
-          },
-          logo: {
-            // backgroundImage: "url(" + require("@/assets/img/apple.svg") + ")"
-            backgroundImage: "url(/img/apple.svg)"
-          }
+          img: "iphone11pro.jpg",
+          logo: "apple.svg"
         },
         {
           name: "Sony Xperia 5 ",
           text: "眼控對焦 | 八核心處理",
           routerpath: "/guest/productdetail/-LrnKPvMhdwPiRhofsjQ",
-          imgpath: {
-            // backgroundImage:
-            //   "url(" + require("@/assets/img/xperia-5-primary.png") + ")"
-            backgroundImage: "url(/img/xperia-5-primary.png)"
-          },
-          logo: {
-            // backgroundImage: "url(" + require("@/assets/img/sony.svg") + ")"
-            backgroundImage: "url(/img/sony.svg)"
-          }
+          img: "xperia-5-primary.png",
+          logo: "sony.svg"
         },
         {
           name: "Samsung Galaxy Note 10 Plus",
           text: "八核心處理器 | O 極限螢幕",
           routerpath: "/guest/productdetail/-Lse_PHBDKpMPI5kunSH",
-          imgpath: {
-            // backgroundImage:"url(" + require("@/assets/img/samsung_galaxy_note10_plus.jpg") +")"
-            backgroundImage: "url(/img/samsung_galaxy_note10_plus.jpg)"
-          },
-          logo: {
-            // backgroundImage: "url(" + require("@/assets/img/samsung.svg") + ")"
-            backgroundImage: "url(/img/samsung.svg)"
-          }
+          img: "samsung_galaxy_note10_plus.jpg",
+          logo: "samsung.svg"
         }
       ],
       random: []
@@ -327,6 +282,10 @@ export default {
           vm.random.push(data[r]);
         }
       }
+    },
+    // 重新編譯圖片路徑
+    compileImgPath(path) {
+      return { backgroundImage: `url(${this.publicPath}img/${path})` };
     }
   },
   created() {

@@ -15,7 +15,7 @@
               <router-link
                 class="detail-brand mr-3"
                 :to="`/guest/productlist/${product.category}`"
-                :style="classifyBrand()"
+                :style="compileBrandImg()"
                 v-if="product.category"
               ></router-link>
               <span>{{product.title}}</span>
@@ -135,6 +135,7 @@ export default {
   },
   data() {
     return {
+      publicPath: process.env.BASE_URL,
       product: {},
       random: [],
       cartProducts: {},
@@ -186,9 +187,9 @@ export default {
       }
     },
     // 根據品牌替換logo
-    classifyBrand() {
+    compileBrandImg() {
       return {
-        backgroundImage: `url(/img/${this.product.category}.svg)`
+        backgroundImage: `url(${this.publicPath}img/${this.product.category}.svg)`
       };
     },
     // 取得當前購物車資料

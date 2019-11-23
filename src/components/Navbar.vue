@@ -32,7 +32,7 @@
     </nav>-->
     <nav class="customnav navbar-expand-lg">
       <router-link class="logo" to="/guest/home">
-        <img :src="logo" width="100px" alt />速達通訊
+        <img :src="`${publicPath}img/logo.png`" width="100px" alt />速達通訊
       </router-link>
       <button
         class="navbar-toggler ml-auto"
@@ -71,7 +71,7 @@ import $ from "jquery";
 export default {
   data() {
     return {
-      logo: "/img/logo.png",
+      publicPath: process.env.BASE_URL,
       objClass: {
         open: false
       }

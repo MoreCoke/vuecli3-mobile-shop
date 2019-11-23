@@ -1,6 +1,6 @@
 <template>
   <div class="product-card">
-    <div class="product-brand bg-cover" :style="classifyBrand(card['category'])"></div>
+    <div class="product-brand bg-cover" :style="compileBrandImg(card['category'])"></div>
     <div class="product-img" :style="{backgroundImage:`url(${card.imgUrl})`}" @click="goProductDetail(card['id'])"></div>
     <div class="product-title">
       {{card.title}}
@@ -16,12 +16,19 @@
 <script>
 export default {
   props: ["card"],
+  data() {
+    return {
+      publicPath: process.env.BASE_URL
+    };
+  },
   methods: {
-    classifyBrand(brand) {
+    // 根據品牌替換logo
+    compileBrandImg(brand) {
       return {
-        backgroundImage: `url(/img/${brand}.svg)`
+        backgroundImage: `url(${this.publicPath}img/${brand}.svg)`
       };
     },
+    // 根據單位編譯商品種類
     classifyType(unit) {
       let type;
       switch (unit) {
@@ -39,6 +46,7 @@ export default {
       }
       return type;
     },
+    // 取得商品id進入商品細節頁面
     goProductDetail(productid) {
       this.$router.push({
         name: "Productdetail",
