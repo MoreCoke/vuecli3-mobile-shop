@@ -71,7 +71,8 @@
       ],
       "dot-notation": "off",
       "import/no-extraneous-dependencies": "off",
-      "no-param-reassign": "off"
+      "no-param-reassign": "off",
+      "no-console": "off"
     },
     "parserOptions": {
       "parser": "babel-eslint"
