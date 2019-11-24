@@ -44,7 +44,7 @@
         </div>
       </router-link>
     </section>
-    <section class="bg-cover p-5 iphone-bgc">
+    <section class="bg-cover p-5 iphone-bgc" :style="compileImgPath(otherbgc[1].img)">
       <div class="text-right">
         <div class="headtitle text-white">為你而活，非你莫屬</div>
         <div class="subtitle text-white">邀您一同共享跨世代的喜悅。</div>
@@ -198,6 +198,9 @@ export default {
           title: "優惠折扣",
           text: "玩小遊戲抽折扣!",
           routerPath: "/guest/promotion"
+        },
+        {
+          img: "iPhone-11-Pro.jpg"
         }
       ],
       serviceItem: [

@@ -3,7 +3,7 @@
     <Alert />
     <form class="form-login" @submit.prevent="signin">
       <router-link class="login" to="/guest/home">
-        <img class="login-img" :src="logo" />
+        <img class="login-img" :src="`${publicPath}img/logo.png`" />
         <span class="login-title">速達通訊</span>
       </router-link>
       <h1 class="h3 mb-3 font-weight-normal text-center">後台管理系統</h1>
@@ -41,11 +41,11 @@ export default {
   },
   data() {
     return {
+      publicPath: process.env.BASE_URL,
       user: {
         username: "",
         password: ""
-      },
-      logo: "/img/logo.png"
+      }
     };
   },
   methods: {

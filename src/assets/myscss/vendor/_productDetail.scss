@@ -130,6 +130,7 @@
     background-color: $secondary;
     color: white;
     border-bottom: 1px solid white;
+    margin-bottom: 0;
   }
   &-total{
     border-bottom-left-radius: 10px;
@@ -154,6 +155,7 @@
     padding: 0.5rem;
     background-color: $secondary;
     color: white;
+    margin-bottom: 0;
   }
   &-listitem {
     display: flex;

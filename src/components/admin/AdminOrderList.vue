@@ -162,7 +162,7 @@ export default {
   },
   methods: {
     getOrders(page = 1) {
-      const url = `${process.env.APIPATH}api/${process.env.CUSTOMPATH}/orders?page=${page}`;
+      const url = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_CUSTOMPATH}/orders?page=${page}`;
       const vm = this;
       vm.isLoading = true;
       this.$http.get(url).then((response) => {
@@ -176,9 +176,10 @@ export default {
       $("#orderModal").modal("show");
     },
     updateOrder(id) {
-      const url = `${process.env.APIPATH}api/${process.env.CUSTOMPATH}/admin/order/${id}`;
+      const url = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_CUSTOMPATH}/admin/order/${id}`;
       const vm = this;
       this.$http.put(url, { data: vm.tempOrder }).then((response) => {
+        console.log(url);
         if (response.data.success) {
           $("#orderModal").modal("hide");
           vm.$bus.$emit("message:push", response.data.message, "success");
