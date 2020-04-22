@@ -85,6 +85,10 @@
 - [vue-loading-overlay](https://www.npmjs.com/package/vue-loading-overlay)
 - [VeeValidate 2](http://vee-validate.logaretm.com/v2/guide/)
 
+## API
+- [六角學院 API](https://github.com/hexschool/vue-course-api-wiki/wiki)
+
+
 ## 資料來源
 
 - [Apple官網](https://www.apple.com/tw/?afid=p238%7Csd9nZSawW-dc_mtid_18707vxu38484_pcrid_231006295679_pgrid_12618487622_&cid=aos-tw-kwgo-brand--slid---product--)
