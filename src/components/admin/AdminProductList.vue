@@ -236,7 +236,6 @@ export default {
       pagination: {},
       tempProduct: {},
       isNew: false,
-      isLoading: false,
       status: {
         fileUploading: false
       }
@@ -246,9 +245,9 @@ export default {
     getProducts(page = 1) {
       const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_CUSTOMPATH}/products?page=${page}`;
       const vm = this;
-      vm.isLoading = true;
+      vm.$store.dispatch("updateLoading", true);
       this.$http.get(api).then((response) => {
-        vm.isLoading = false;
+        vm.$store.dispatch("updateLoading", false);
         vm.products = response.data.products;
         vm.pagination = response.data.pagination;
       });
@@ -327,6 +326,11 @@ export default {
             this.$bus.$emit("message:push", "上傳失敗", "warning");
           }
         });
+    }
+  },
+  computed: {
+    isLoading() {
+      return this.$store.state.isLoading;
     }
   },
   created() {

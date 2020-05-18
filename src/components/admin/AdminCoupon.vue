@@ -165,7 +165,6 @@ export default {
       pagination: {},
       tempCoupon: {},
       isNew: false,
-      isLoading: false,
       status: {
         fileUploading: false
       }
@@ -175,9 +174,9 @@ export default {
     getCoupons(page = 1) {
       const url = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_CUSTOMPATH}/admin/coupons?page=${page}`;
       const vm = this;
-      vm.isLoading = true;
+      vm.$store.dispatch("updateLoading", true);
       this.$http.get(url).then((response) => {
-        vm.isLoading = false;
+        vm.$store.dispatch("updateLoading", false);
         vm.coupons = response.data.coupons;
         vm.pagination = response.data.pagination;
       });
@@ -231,6 +230,11 @@ export default {
           vm.getCoupons();
         }
       });
+    }
+  },
+  computed: {
+    isLoading() {
+      return this.$store.state.isLoading;
     }
   },
   created() {

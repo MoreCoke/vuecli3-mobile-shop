@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="vld-parent">
-      <loading :active.sync="effect.isLoading"></loading>
+      <loading :active.sync="isLoading"></loading>
     </div>
     <ul class="step my-4">
       <li class="step-check" :class="{'done': step==='check'}">
@@ -44,7 +44,6 @@ export default {
       step: this.$route.params.step,
       cartProducts: {},
       effect: {
-        isLoading: false,
         currentLoading: "",
         couponLoading: false
       }
@@ -55,15 +54,20 @@ export default {
     getCartData() {
       const vm = this;
       const url = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
-      vm.effect.isLoading = true;
+      vm.$store.commit("LOADING", true);
       vm.$http.get(url).then((response) => {
         vm.cartProducts = response.data.data;
-        vm.effect.isLoading = false;
+        vm.$store.commit("LOADING", false);
       });
     },
     // 追蹤當前結帳步驟，用來渲染相對應的組件
     checkStep() {
       this.step = this.$route.params.step;
+    }
+  },
+  computed: {
+    isLoading() {
+      return this.$store.state.isLoading;
     }
   },
   watch: {

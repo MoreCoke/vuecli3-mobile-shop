@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="vld-parent">
-      <loading :active.sync="effect.isLoading"></loading>
+      <loading :active.sync="isLoading"></loading>
     </div>
     <EndGame :active="gameover" :coupon="randomCoupon.title" />
     <div class="topic">優惠小遊戲</div>
@@ -62,31 +62,19 @@ export default {
         }
       ],
       randomCoupon: {},
-      gameover: false,
-      effect: {
-        isLoading: false
-      }
+      gameover: false
     };
   },
   methods: {
     getData() {
       const url = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_CUSTOMPATH}/products/all`;
       const vm = this;
-      vm.effect.isLoading = true;
+      vm.$store.commit("LOADING", true);
       vm.$http.get(url).then((response) => {
-        vm.effect.isLoading = false;
+        vm.$store.dispatch("updateLoading", false);
         vm.getRandom(...response.data.products);
       });
     },
-    // getCoupons(page = 1) {
-    //   let url = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_CUSTOMPATH}/admin/coupons?page=${page}`; //"https://vue-course-api.hexschool.io/api/morecoke/products?page=:page";
-    //   let vm = this;
-    //   vm.effect.isLoading = true;
-    //   this.$http.get(url).then(response => {
-    //     vm.effect.isLoading = false;
-    //     vm.coupons = response.data.coupons;
-    //   });
-    // },
     getRandom(...data) {
       const vm = this;
       const len = data.length;
@@ -169,6 +157,11 @@ export default {
       vm.gameover = true;
       // vm.$bus.$emit("message:push", `恭喜你獲得${vm.randomCoupon.title}`, "success");
       localStorage.setItem("coupon", JSON.stringify(vm.randomCoupon));
+    }
+  },
+  computed: {
+    isLoading() {
+      return this.$store.state.isLoading;
     }
   },
   created() {

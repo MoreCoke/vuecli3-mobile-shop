@@ -12,22 +12,6 @@
         <div class="col-md-9 h-100">
           <div class="product-bar">
             <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-              <!-- <li class="nav-item">
-                <a
-                  class="nav-link active"
-                  data-toggle="pill"
-                  @click="getTargetProductList('全部商品')"
-                >全部商品</a>
-              </li>-->
-              <!-- <li class="nav-item">
-                <a class="nav-link" data-toggle="pill">手機</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" data-toggle="pill">手錶</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" data-toggle="pill">耳機</a>
-              </li>-->
               <li class="nav-item" v-for="(item,index) in productType" :key="index">
                 <a
                   class="nav-link"
@@ -78,7 +62,6 @@ export default {
       productType: ["全部商品", "手機", "手錶", "耳機"],
       targetProducts: [],
       showProducts: [],
-      isLoading: false,
       currentTypeIndex: 0,
       emitData: {
         type: "全部商品",
@@ -108,10 +91,10 @@ export default {
     getData() {
       const url = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_CUSTOMPATH}/products/all`;
       const vm = this;
-      vm.isLoading = true;
+      vm.$store.commit("LOADING", true);
       vm.$http.get(url).then((response) => {
         vm.products = response.data.products;
-        vm.isLoading = false;
+        vm.$store.dispatch("updateLoading", false);
         vm.getTargetProductList(vm.emitData["type"], vm.emitData["index"]);
         // vm.getTargetProductList("全部商品",0);
       });
@@ -178,6 +161,9 @@ export default {
         typeof this.showProducts !== "undefined"
         && this.showProducts.length === 0
       );
+    },
+    isLoading() {
+      return this.$store.state.isLoading;
     }
   },
   watch: {

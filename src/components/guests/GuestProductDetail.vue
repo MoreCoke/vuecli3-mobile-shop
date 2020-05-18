@@ -1,7 +1,7 @@
 <template>
   <div class="container-fluid my-4">
     <div class="vld-parent">
-      <loading :active.sync="effect.isLoading"></loading>
+      <loading :active.sync="isLoading"></loading>
     </div>
     <Cart class="shopping-left" @delcart="getCartData" :addCart="cartProductsNum" />
     <div class="row">
@@ -142,7 +142,6 @@ export default {
       cartProductsNum: null,
       qty: 1,
       effect: {
-        isLoading: false,
         currentLoading: ""
       }
     };
@@ -154,12 +153,11 @@ export default {
       const vm = this;
       const id = vm.$route.params.id;
       const url = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_CUSTOMPATH}/product/${id}`;
-      vm.effect.isLoading = true;
+      vm.$store.dispatch("updateLoading", true);
       vm.$http.get(url).then((response) => {
         vm.product = response.data.product;
-        // vm.images.normal_size[0].url = vm.product.imgUrl;
         vm.getData();
-        vm.effect.isLoading = false;
+        vm.$store.dispatch("updateLoading", false);
       });
     },
     /* eslint-enable prefer-destructuring */
@@ -265,6 +263,11 @@ export default {
       if (this.cartProductsNum > 0) {
         this.$router.push("/guest/productorder/check");
       }
+    }
+  },
+  computed: {
+    isLoading() {
+      return this.$store.state.isLoading;
     }
   },
   watch: {

@@ -156,17 +156,16 @@ export default {
     return {
       pagination: {},
       tempOrder: {},
-      orders: [],
-      isLoading: false
+      orders: []
     };
   },
   methods: {
     getOrders(page = 1) {
       const url = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_CUSTOMPATH}/orders?page=${page}`;
       const vm = this;
-      vm.isLoading = true;
+      vm.$store.dispatch("updateLoading", true);
       this.$http.get(url).then((response) => {
-        vm.isLoading = false;
+        vm.$store.dispatch("updateLoading", false);
         vm.orders = response.data.orders;
         vm.pagination = response.data.pagination;
       });
@@ -189,6 +188,11 @@ export default {
           vm.$bus.$emit("message:push", response.data.message, "warning");
         }
       });
+    }
+  },
+  computed: {
+    isLoading() {
+      return this.$store.state.isLoading;
     }
   },
   created() {

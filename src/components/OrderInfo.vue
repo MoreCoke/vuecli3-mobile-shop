@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="vld-parent">
-      <loading :active.sync="effect.isLoading"></loading>
+      <loading :active.sync="isLoading"></loading>
     </div>
     <div class="topic">訂購人資料</div>
     <div class="my-5 row justify-content-center">
@@ -106,9 +106,6 @@
 export default {
   data() {
     return {
-      effect: {
-        isLoading: false
-      },
       form: {
         user: {
           name: "",
@@ -126,7 +123,7 @@ export default {
       const url = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_CUSTOMPATH}/order`;
       this.$validator.validate().then((valid) => {
         if (valid) {
-          vm.effect.isLoading = true;
+          vm.$store.commit("LOADING", true);
           vm.$http.post(url, { data: vm.form }).then((response) => {
             if (response.data.success) {
               vm.$bus.$emit("message:push", response.data.message, "success");
@@ -134,7 +131,7 @@ export default {
             } else {
               vm.$bus.$emit("message:push", response.data.message, "warning");
             }
-            vm.effect.isLoading = false;
+            vm.$store.commit("LOADING", false);
           });
         } else {
           vm.$bus.$emit("message:push", "表單尚未完成", "warning");
@@ -149,6 +146,11 @@ export default {
         path: "/guest/productorder/finished",
         query: { orderid: id }
       });
+    }
+  },
+  computed: {
+    isLoading() {
+      return this.$store.state.isLoading;
     }
   }
 };
