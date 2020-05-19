@@ -1,7 +1,6 @@
 <template>
   <div class="container-fluid my-4">
     <div class="vld-parent">
-      <loading :active.sync="isLoading"></loading>
     </div>
     <Cart class="shopping-left" @delcart="getCartData" :addCart="cartProductsNum" />
     <div class="row">
@@ -263,11 +262,6 @@ export default {
       if (this.cartProductsNum > 0) {
         this.$router.push("/guest/productorder/check");
       }
-    }
-  },
-  computed: {
-    isLoading() {
-      return this.$store.state.isLoading;
     }
   },
   watch: {

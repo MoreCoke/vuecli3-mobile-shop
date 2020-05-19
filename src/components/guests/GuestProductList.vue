@@ -1,7 +1,6 @@
 <template>
   <div class="mt-3">
     <div class="vld-parent">
-      <loading :active.sync="isLoading"></loading>
     </div>
     <Cart class="shopping-right" />
     <div class="container">
@@ -161,9 +160,6 @@ export default {
         typeof this.showProducts !== "undefined"
         && this.showProducts.length === 0
       );
-    },
-    isLoading() {
-      return this.$store.state.isLoading;
     }
   },
   watch: {

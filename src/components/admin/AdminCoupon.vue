@@ -1,7 +1,6 @@
 <template>
   <div>
     <div class="vld-parent">
-      <loading :active.sync="isLoading"></loading>
     </div>
 
     <div class="text-right">
@@ -230,11 +229,6 @@ export default {
           vm.getCoupons();
         }
       });
-    }
-  },
-  computed: {
-    isLoading() {
-      return this.$store.state.isLoading;
     }
   },
   created() {

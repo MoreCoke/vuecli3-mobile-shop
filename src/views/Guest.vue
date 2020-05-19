@@ -1,5 +1,6 @@
 <template>
   <div class="vuebody">
+    <loading :active.sync="isLoading"></loading>
     <div class="wrapper">
       <Navbar />
       <Alert />
@@ -21,6 +22,11 @@ export default {
     Navbar,
     Alert,
     Footer
+  },
+  computed: {
+    isLoading() {
+      return this.$store.state.isLoading;
+    }
   }
 };
 </script>

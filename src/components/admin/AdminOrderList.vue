@@ -1,7 +1,6 @@
 <template>
   <div>
     <div class="vld-parent">
-      <loading :active.sync="isLoading"></loading>
     </div>
     <table class="table mt-4">
       <thead>
@@ -188,11 +187,6 @@ export default {
           vm.$bus.$emit("message:push", response.data.message, "warning");
         }
       });
-    }
-  },
-  computed: {
-    isLoading() {
-      return this.$store.state.isLoading;
     }
   },
   created() {

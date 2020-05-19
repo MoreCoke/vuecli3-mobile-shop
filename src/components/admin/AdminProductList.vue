@@ -1,7 +1,6 @@
 <template>
   <div>
     <div class="vld-parent">
-      <loading :active.sync="isLoading"></loading>
     </div>
     <div class="text-right">
       <button class="btn btn-primary" @click="openModal(true)">建立新的產品</button>
@@ -318,19 +317,12 @@ export default {
         .then((response) => {
           vm.status.fileUploading = false;
           if (response.data.success) {
-            // vm.tempProduct.imageUrl = response.data.imageUrl;
-            // console.log(vm.tempProduct);
             vm.$bus.$emit("message:push", "上傳成功", "success");
             vm.$set(vm.tempProduct, "imgUrl", response.data.imageUrl);
           } else {
             this.$bus.$emit("message:push", "上傳失敗", "warning");
           }
         });
-    }
-  },
-  computed: {
-    isLoading() {
-      return this.$store.state.isLoading;
     }
   },
   created() {

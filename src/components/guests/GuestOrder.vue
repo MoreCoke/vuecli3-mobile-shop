@@ -1,7 +1,6 @@
 <template>
   <div class="container">
     <div class="vld-parent">
-      <loading :active.sync="isLoading"></loading>
     </div>
     <ul class="step my-4">
       <li class="step-check" :class="{'done': step==='check'}">
@@ -63,11 +62,6 @@ export default {
     // 追蹤當前結帳步驟，用來渲染相對應的組件
     checkStep() {
       this.step = this.$route.params.step;
-    }
-  },
-  computed: {
-    isLoading() {
-      return this.$store.state.isLoading;
     }
   },
   watch: {

@@ -1,7 +1,6 @@
 <template>
   <div class="container">
     <div class="vld-parent">
-      <loading :active.sync="isLoading"></loading>
     </div>
     <EndGame :active="gameover" :coupon="randomCoupon.title" />
     <div class="topic">優惠小遊戲</div>
@@ -157,11 +156,6 @@ export default {
       vm.gameover = true;
       // vm.$bus.$emit("message:push", `恭喜你獲得${vm.randomCoupon.title}`, "success");
       localStorage.setItem("coupon", JSON.stringify(vm.randomCoupon));
-    }
-  },
-  computed: {
-    isLoading() {
-      return this.$store.state.isLoading;
     }
   },
   created() {
