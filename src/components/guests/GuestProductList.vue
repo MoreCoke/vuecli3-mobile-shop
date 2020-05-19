@@ -93,7 +93,7 @@ export default {
       vm.$store.commit("LOADING", true);
       vm.$http.get(url).then((response) => {
         vm.products = response.data.products;
-        vm.$store.dispatch("updateLoading", false);
+        vm.$store.commit("LOADING", false);
         vm.getTargetProductList(vm.emitData["type"], vm.emitData["index"]);
         // vm.getTargetProductList("全部商品",0);
       });

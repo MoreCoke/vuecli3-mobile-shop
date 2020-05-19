@@ -70,7 +70,7 @@ export default {
       const vm = this;
       vm.$store.commit("LOADING", true);
       vm.$http.get(url).then((response) => {
-        vm.$store.dispatch("updateLoading", false);
+        vm.$store.commit("LOADING", false);
         vm.getRandom(...response.data.products);
       });
     },

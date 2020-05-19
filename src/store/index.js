@@ -8,9 +8,7 @@ export default new Vuex.Store({
     isLoading: false
   },
   actions: {
-    updateLoading(context, payload) {
-      context.commit("LOADING", payload);
-    }
+
   },
   mutations: {
     LOADING(state, payload) {

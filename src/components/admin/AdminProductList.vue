@@ -244,9 +244,9 @@ export default {
     getProducts(page = 1) {
       const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_CUSTOMPATH}/products?page=${page}`;
       const vm = this;
-      vm.$store.dispatch("updateLoading", true);
+      vm.$store.commit("LOADING", true);
       this.$http.get(api).then((response) => {
-        vm.$store.dispatch("updateLoading", false);
+        vm.$store.commit("LOADING", false);
         vm.products = response.data.products;
         vm.pagination = response.data.pagination;
       });

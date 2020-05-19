@@ -152,11 +152,11 @@ export default {
       const vm = this;
       const id = vm.$route.params.id;
       const url = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_CUSTOMPATH}/product/${id}`;
-      vm.$store.dispatch("updateLoading", true);
+      vm.$store.commit("LOADING", true);
       vm.$http.get(url).then((response) => {
         vm.product = response.data.product;
         vm.getData();
-        vm.$store.dispatch("updateLoading", false);
+        vm.$store.commit("LOADING", false);
       });
     },
     /* eslint-enable prefer-destructuring */

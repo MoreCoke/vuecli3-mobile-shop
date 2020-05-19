@@ -173,9 +173,9 @@ export default {
     getCoupons(page = 1) {
       const url = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_CUSTOMPATH}/admin/coupons?page=${page}`;
       const vm = this;
-      vm.$store.dispatch("updateLoading", true);
+      vm.$store.commit("LOADING", true);
       this.$http.get(url).then((response) => {
-        vm.$store.dispatch("updateLoading", false);
+        vm.$store.commit("LOADING", false);
         vm.coupons = response.data.coupons;
         vm.pagination = response.data.pagination;
       });
