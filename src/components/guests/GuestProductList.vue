@@ -61,11 +61,7 @@ export default {
       productType: ["全部商品", "手機", "手錶", "耳機"],
       targetProducts: [],
       showProducts: [],
-      currentTypeIndex: 0,
-      emitData: {
-        type: "全部商品",
-        index: 0
-      }
+      currentTypeIndex: 0
     };
   },
   methods: {
@@ -94,8 +90,7 @@ export default {
       vm.$http.get(url).then((response) => {
         vm.products = response.data.products;
         vm.$store.commit("LOADING", false);
-        vm.getTargetProductList(vm.emitData["type"], vm.emitData["index"]);
-        // vm.getTargetProductList("全部商品",0);
+        vm.getTargetProductList(vm.homeProductTypeIndex["type"], vm.homeProductTypeIndex["index"]);
       });
     },
     // 撈所有資料到前端，依品牌和商品類型分類商品
@@ -160,6 +155,9 @@ export default {
         typeof this.showProducts !== "undefined"
         && this.showProducts.length === 0
       );
+    },
+    homeProductTypeIndex() {
+      return this.$store.state.homeProductTypeIndex;
     }
   },
   watch: {
@@ -168,15 +166,7 @@ export default {
     }
   },
   created() {
-    const vm = this;
     this.getData();
-    this.$bus.$on("HomeProductTypeIndex", (type, index) => {
-      vm.emitData.type = type;
-      vm.emitData.index = index;
-    });
-  },
-  beforeDestroy() {
-    this.$bus.$off("HomeProductTypeIndex");
   }
 };
 </script>

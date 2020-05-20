@@ -12,7 +12,6 @@ import VueI18n from "vue-i18n";
 import App from "./App";
 import router from "./router";
 import store from "./store/index";
-import "./bus";
 import currencyFilter from "./filters/currency";
 import date from "./filters/date";
 

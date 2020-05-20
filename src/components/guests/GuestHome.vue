@@ -272,7 +272,7 @@ export default {
     emitProductType(type, index) {
       const vm = this;
       this.$nextTick(() => {
-        vm.$bus.$emit("HomeProductTypeIndex", type, index);
+        vm.$store.commit("HOME_PRODUCT_TYPE_INDEX", { type, index });
       });
     },
     // 取得汰舊換新的隨機推薦手機

@@ -6,7 +6,11 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     isLoading: false,
-    messages: []
+    messages: [],
+    homeProductTypeIndex: {
+      type: "全部商品",
+      index: 0
+    }
   },
   actions: {
     updateMessage(context, { message, status }) {
@@ -43,7 +47,10 @@ export default new Vuex.Store({
           state.messages.splice(i, 1);
         }
       });
+    },
+    HOME_PRODUCT_TYPE_INDEX(state, { type, index }) {
+      state.homeProductTypeIndex.type = type;
+      state.homeProductTypeIndex.index = index;
     }
   }
-
 });
