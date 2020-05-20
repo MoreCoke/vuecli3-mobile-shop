@@ -206,11 +206,11 @@ export default {
       this.$http[httpMethod](api, { data: vm.tempCoupon }).then((response) => {
         if (response.data.success) {
           $("#couponModal").modal("hide");
-          vm.$bus.$emit("message:push", response.data.message, "success");
+          vm.$store.dispatch("updateMessage", { message: response.data.message, status: "success" });
           vm.getCoupons();
         } else {
           $("#couponModal").modal("hide");
-          vm.$bus.$emit("message:push", response.data.message, "warning");
+          vm.$store.dispatch("updateMessage", { message: response.data.message, status: "warning" });
           vm.getCoupons();
         }
       });
@@ -221,11 +221,11 @@ export default {
       this.$http.delete(api, { data: vm.tempCoupon }).then((response) => {
         if (response.data.success) {
           $("#delCouponModal").modal("hide");
-          vm.$bus.$emit("message:push", response.data.message, "success");
+          vm.$store.dispatch("updateMessage", { message: response.data.message, status: "success" });
           vm.getCoupons();
         } else {
           $("#delCouponModal").modal("hide");
-          vm.$bus.$emit("message:push", response.data.message, "warning");
+          vm.$store.dispatch("updateMessage", { message: response.data.message, status: "warning" });
           vm.getCoupons();
         }
       });

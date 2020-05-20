@@ -55,9 +55,9 @@ export default {
       this.$http.post(api, vm.user).then((response) => {
         if (response.data.success) {
           vm.$router.push("/admin/products");
-          vm.$bus.$emit("message:push", response.data.message, "success");
+          vm.$store.dispatch("updateMessage", { message: response.data.message, status: "success" });
         } else {
-          vm.$bus.$emit("message:push", response.data.message, "warning");
+          vm.$store.dispatch("updateMessage", { message: response.data.message, status: "warning" });
         }
       });
     }

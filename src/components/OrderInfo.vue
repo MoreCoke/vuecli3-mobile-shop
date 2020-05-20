@@ -126,15 +126,15 @@ export default {
           vm.$store.commit("LOADING", true);
           vm.$http.post(url, { data: vm.form }).then((response) => {
             if (response.data.success) {
-              vm.$bus.$emit("message:push", response.data.message, "success");
+              vm.$store.dispatch("updateMessage", { message: response.data.message, status: "success" });
               vm.toOrderFinished(response.data.orderId);
             } else {
-              vm.$bus.$emit("message:push", response.data.message, "warning");
+              vm.$store.dispatch("updateMessage", { message: response.data.message, status: "warning" });
             }
             vm.$store.commit("LOADING", false);
           });
         } else {
-          vm.$bus.$emit("message:push", "表單尚未完成", "warning");
+          vm.$store.dispatch("updateMessage", { message: "表單尚未完成", status: "warning" });
         }
       });
     },

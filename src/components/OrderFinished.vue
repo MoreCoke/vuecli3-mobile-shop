@@ -98,7 +98,7 @@ export default {
       const url = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_CUSTOMPATH}/pay/${orderid}`;
       vm.effect.orderLoading = true;
       vm.$http.post(url).then((response) => {
-        this.$bus.$emit("message:push", response.data.message, "success");
+        vm.$store.dispatch("updateMessage", { message: response.data.message, status: "success" });
         vm.effect.orderLoading = false;
         vm.getOrderData(orderid);
       });

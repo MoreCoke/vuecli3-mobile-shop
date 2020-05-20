@@ -180,11 +180,11 @@ export default {
         console.log(url);
         if (response.data.success) {
           $("#orderModal").modal("hide");
-          vm.$bus.$emit("message:push", response.data.message, "success");
+          vm.$store.dispatch("updateMessage", { message: response.data.message, status: "success" });
           vm.getOrders();
         } else {
           $("#orderModal").modal("hide");
-          vm.$bus.$emit("message:push", response.data.message, "warning");
+          vm.$store.dispatch("updateMessage", { message: response.data.message, status: "warning" });
         }
       });
     }

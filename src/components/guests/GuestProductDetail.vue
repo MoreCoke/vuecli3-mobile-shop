@@ -204,7 +204,7 @@ export default {
       const url = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
       if (qty > 3) {
         qty = 3;
-        vm.$bus.$emit("每款商品限購3個", "warning");
+        vm.$store.dispatch("updateMessage", { message: "每款商品限購3個", status: "warning" });
       }
       const cart = {
         product_id: id,
@@ -214,7 +214,7 @@ export default {
       vm.$http.post(url, { data: cart }).then((response) => {
         vm.getCartData();
         vm.effect.currentLoading = "";
-        vm.$bus.$emit("message:push", response.data.message, "success");
+        vm.$store.dispatch("updateMessage", { message: response.data.message, status: "success" });
       });
     },
     // 根據id刪除當前商品
@@ -226,7 +226,7 @@ export default {
         vm.getCartData();
         vm.effect.currentLoading = "";
         if (showmessage) {
-          vm.$bus.$emit("message:push", response.data.message, "warning");
+          vm.$store.dispatch("updateMessage", { message: response.data.message, status: "warning" });
         }
       });
     },
@@ -242,7 +242,7 @@ export default {
         sameProductNum += sameProduct.qty;
         if (sameProductNum > 3) {
           sameProductNum = 3;
-          vm.$bus.$emit("message:push", "每款商品限購3個", "warning");
+          vm.$store.dispatch("updateMessage", { message: "每款商品限購3個", status: "warning" });
         } else {
           vm.delCartData(sameProduct.id, false);
           vm.addToCart(id, sameProductNum);

@@ -277,11 +277,11 @@ export default {
       this.$http[httpMethod](api, { data: vm.tempProduct }).then((response) => {
         if (response.data.success) {
           $("#productModal").modal("hide");
-          vm.$bus.$emit("message:push", response.data.message, "success");
+          vm.$store.dispatch("updateMessage", { message: response.data.message, status: "success" });
           vm.getProducts();
         } else {
           $("#productModal").modal("hide");
-          vm.$bus.$emit("message:push", response.data.message, "warning");
+          vm.$store.dispatch("updateMessage", { message: response.data.message, status: "warning" });
           vm.getProducts();
         }
       });
@@ -292,11 +292,11 @@ export default {
       this.$http.delete(api, { data: vm.tempProduct }).then((response) => {
         if (response.data.success) {
           $("#delProductModal").modal("hide");
-          vm.$bus.$emit("message:push", response.data.message, "success");
+          vm.$store.dispatch("updateMessage", { message: response.data.message, status: "success" });
           vm.getProducts();
         } else {
           $("#delProductModal").modal("hide");
-          vm.$bus.$emit("message:push", response.data.message, "warning");
+          vm.$store.dispatch("updateMessage", { message: response.data.message, status: "warning" });
           vm.getProducts();
         }
       });
@@ -317,10 +317,10 @@ export default {
         .then((response) => {
           vm.status.fileUploading = false;
           if (response.data.success) {
-            vm.$bus.$emit("message:push", "上傳成功", "success");
+            vm.$store.dispatch("updateMessage", { message: "上傳成功", status: "success" });
             vm.$set(vm.tempProduct, "imgUrl", response.data.imageUrl);
           } else {
-            this.$bus.$emit("message:push", "上傳失敗", "warning");
+            vm.$store.dispatch("updateMessage", { message: "上傳失敗", status: "warning" });
           }
         });
     }

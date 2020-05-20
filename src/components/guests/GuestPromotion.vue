@@ -154,7 +154,6 @@ export default {
     gameOver() {
       const vm = this;
       vm.gameover = true;
-      // vm.$bus.$emit("message:push", `恭喜你獲得${vm.randomCoupon.title}`, "success");
       localStorage.setItem("coupon", JSON.stringify(vm.randomCoupon));
     }
   },

@@ -85,7 +85,7 @@ export default {
       vm.$http.delete(url).then((response) => {
         vm.getCartData();
         vm.effect.currentLoading = "";
-        vm.$bus.$emit("message:push", response.data.message, "warning");
+        vm.$store.dispatch("updateMessage", { message: response.data.message, status: "warning" });
         vm.$emit("delcart");
       });
     },
