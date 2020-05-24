@@ -119,22 +119,21 @@ export default {
   },
   methods: {
     sentOrderData() {
-      const vm = this;
       const url = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_CUSTOMPATH}/order`;
       this.$validator.validate().then((valid) => {
         if (valid) {
-          vm.$store.commit("LOADING", true);
-          vm.$http.post(url, { data: vm.form }).then((response) => {
+          this.$store.commit("LOADING", true);
+          this.$http.post(url, { data: this.form }).then((response) => {
             if (response.data.success) {
-              vm.$store.dispatch("updateMessage", { message: response.data.message, status: "success" });
-              vm.toOrderFinished(response.data.orderId);
+              this.$store.dispatch("updateMessage", { message: response.data.message, status: "success" });
+              this.toOrderFinished(response.data.orderId);
             } else {
-              vm.$store.dispatch("updateMessage", { message: response.data.message, status: "warning" });
+              this.$store.dispatch("updateMessage", { message: response.data.message, status: "warning" });
             }
-            vm.$store.commit("LOADING", false);
+            this.$store.commit("LOADING", false);
           });
         } else {
-          vm.$store.dispatch("updateMessage", { message: "表單尚未完成", status: "warning" });
+          this.$store.dispatch("updateMessage", { message: "表單尚未完成", status: "warning" });
         }
       });
     },

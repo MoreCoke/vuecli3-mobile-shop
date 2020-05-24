@@ -139,35 +139,33 @@ export default {
   },
   methods: {
     delCartData(id) {
-      const vm = this;
       const url = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_CUSTOMPATH}/cart/${id}`;
-      vm.effect.currentLoading = id;
-      vm.$http.delete(url).then((response) => {
-        vm.$emit("updateCart");
-        vm.effect.currentLoading = "";
-        vm.$store.dispatch("updateMessage", { message: response.data.message, status: "warning" });
+      this.effect.currentLoading = id;
+      this.$http.delete(url).then((response) => {
+        this.$emit("updateCart");
+        this.effect.currentLoading = "";
+        this.$store.dispatch("updateMessage", { message: response.data.message, status: "warning" });
       });
     },
     useCoupon() {
-      const vm = this;
       const url = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_CUSTOMPATH}/coupon`;
-      vm.effect.couponLoading = true;
-      vm.$http
+      this.effect.couponLoading = true;
+      this.$http
         .post(url, {
           data: {
-            code: vm.couponCode
+            code: this.couponCode
           }
         })
         .then((response) => {
           if (response.data.success) {
-            vm.$emit("updateCart");
-            vm.$store.dispatch("updateMessage", { message: response.data.message, status: "success" });
-            vm.couponCode = "";
+            this.$emit("updateCart");
+            this.$store.dispatch("updateMessage", { message: response.data.message, status: "success" });
+            this.couponCode = "";
             localStorage.clear();
           } else {
-            vm.$store.dispatch("updateMessage", { message: response.data.message, status: "warning" });
+            this.$store.dispatch("updateMessage", { message: response.data.message, status: "warning" });
           }
-          vm.effect.couponLoading = false;
+          this.effect.couponLoading = false;
         });
     },
     toggleCoupon() {

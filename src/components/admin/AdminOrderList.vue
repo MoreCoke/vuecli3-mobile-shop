@@ -161,12 +161,11 @@ export default {
   methods: {
     getOrders(page = 1) {
       const url = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_CUSTOMPATH}/orders?page=${page}`;
-      const vm = this;
-      vm.$store.commit("LOADING", true);
+      this.$store.commit("LOADING", true);
       this.$http.get(url).then((response) => {
-        vm.$store.commit("LOADING", false);
-        vm.orders = response.data.orders;
-        vm.pagination = response.data.pagination;
+        this.$store.commit("LOADING", false);
+        this.orders = response.data.orders;
+        this.pagination = response.data.pagination;
       });
     },
     openModal(item) {
@@ -175,16 +174,14 @@ export default {
     },
     updateOrder(id) {
       const url = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_CUSTOMPATH}/admin/order/${id}`;
-      const vm = this;
-      this.$http.put(url, { data: vm.tempOrder }).then((response) => {
-        console.log(url);
+      this.$http.put(url, { data: this.tempOrder }).then((response) => {
         if (response.data.success) {
           $("#orderModal").modal("hide");
-          vm.$store.dispatch("updateMessage", { message: response.data.message, status: "success" });
-          vm.getOrders();
+          this.$store.dispatch("updateMessage", { message: response.data.message, status: "success" });
+          this.getOrders();
         } else {
           $("#orderModal").modal("hide");
-          vm.$store.dispatch("updateMessage", { message: response.data.message, status: "warning" });
+          this.$store.dispatch("updateMessage", { message: response.data.message, status: "warning" });
         }
       });
     }

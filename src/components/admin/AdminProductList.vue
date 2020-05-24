@@ -243,12 +243,11 @@ export default {
   methods: {
     getProducts(page = 1) {
       const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_CUSTOMPATH}/products?page=${page}`;
-      const vm = this;
-      vm.$store.commit("LOADING", true);
+      this.$store.commit("LOADING", true);
       this.$http.get(api).then((response) => {
-        vm.$store.commit("LOADING", false);
-        vm.products = response.data.products;
-        vm.pagination = response.data.pagination;
+        this.$store.commit("LOADING", false);
+        this.products = response.data.products;
+        this.pagination = response.data.pagination;
       });
     },
     openModal(isNew, item) {
@@ -269,45 +268,42 @@ export default {
     updateProduct() {
       let api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_CUSTOMPATH}/admin/product`;
       let httpMethod = "post";
-      const vm = this;
-      if (!vm.isNew) {
-        api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_CUSTOMPATH}/admin/product/${vm.tempProduct.id}`;
+      if (!this.isNew) {
+        api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_CUSTOMPATH}/admin/product/${this.tempProduct.id}`;
         httpMethod = "put";
       }
-      this.$http[httpMethod](api, { data: vm.tempProduct }).then((response) => {
+      this.$http[httpMethod](api, { data: this.tempProduct }).then((response) => {
         if (response.data.success) {
           $("#productModal").modal("hide");
-          vm.$store.dispatch("updateMessage", { message: response.data.message, status: "success" });
-          vm.getProducts();
+          this.$store.dispatch("updateMessage", { message: response.data.message, status: "success" });
+          this.getProducts();
         } else {
           $("#productModal").modal("hide");
-          vm.$store.dispatch("updateMessage", { message: response.data.message, status: "warning" });
-          vm.getProducts();
+          this.$store.dispatch("updateMessage", { message: response.data.message, status: "warning" });
+          this.getProducts();
         }
       });
     },
     delProduct() {
-      const vm = this;
-      const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_CUSTOMPATH}/admin/product/${vm.tempProduct.id}`;
-      this.$http.delete(api, { data: vm.tempProduct }).then((response) => {
+      const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_CUSTOMPATH}/admin/product/${this.tempProduct.id}`;
+      this.$http.delete(api, { data: this.tempProduct }).then((response) => {
         if (response.data.success) {
           $("#delProductModal").modal("hide");
-          vm.$store.dispatch("updateMessage", { message: response.data.message, status: "success" });
-          vm.getProducts();
+          this.$store.dispatch("updateMessage", { message: response.data.message, status: "success" });
+          this.getProducts();
         } else {
           $("#delProductModal").modal("hide");
-          vm.$store.dispatch("updateMessage", { message: response.data.message, status: "warning" });
-          vm.getProducts();
+          this.$store.dispatch("updateMessage", { message: response.data.message, status: "warning" });
+          this.getProducts();
         }
       });
     },
     uploadFile() {
       const uploadedFile = this.$refs.files.files[0];
-      const vm = this;
       const formData = new FormData();
       formData.append("file-to-upload", uploadedFile);
       const url = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_CUSTOMPATH}/admin/upload`;
-      vm.status.fileUploading = true;
+      this.status.fileUploading = true;
       this.$http
         .post(url, formData, {
           headers: {
@@ -315,12 +311,12 @@ export default {
           }
         })
         .then((response) => {
-          vm.status.fileUploading = false;
+          this.status.fileUploading = false;
           if (response.data.success) {
-            vm.$store.dispatch("updateMessage", { message: "上傳成功", status: "success" });
-            vm.$set(vm.tempProduct, "imgUrl", response.data.imageUrl);
+            this.$store.dispatch("updateMessage", { message: "上傳成功", status: "success" });
+            this.$set(this.tempProduct, "imgUrl", response.data.imageUrl);
           } else {
-            vm.$store.dispatch("updateMessage", { message: "上傳失敗", status: "warning" });
+            this.$store.dispatch("updateMessage", { message: "上傳失敗", status: "warning" });
           }
         });
     }

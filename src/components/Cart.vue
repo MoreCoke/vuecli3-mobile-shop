@@ -71,22 +71,20 @@ export default {
   },
   methods: {
     getCartData() {
-      const vm = this;
       const url = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
-      vm.$http.get(url).then((response) => {
-        vm.cartProducts = response.data.data;
-        vm.cartProductsNum = response.data.data.carts.length;
+      this.$http.get(url).then((response) => {
+        this.cartProducts = response.data.data;
+        this.cartProductsNum = response.data.data.carts.length;
       });
     },
     delCartData(id) {
-      const vm = this;
       const url = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_CUSTOMPATH}/cart/${id}`;
-      vm.effect.currentLoading = id;
-      vm.$http.delete(url).then((response) => {
-        vm.getCartData();
-        vm.effect.currentLoading = "";
-        vm.$store.dispatch("updateMessage", { message: response.data.message, status: "warning" });
-        vm.$emit("delcart");
+      this.effect.currentLoading = id;
+      this.$http.delete(url).then((response) => {
+        this.getCartData();
+        this.effect.currentLoading = "";
+        this.$store.dispatch("updateMessage", { message: response.data.message, status: "warning" });
+        this.$emit("delcart");
       });
     },
     toOrderCheck() {

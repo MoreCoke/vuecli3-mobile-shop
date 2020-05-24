@@ -86,10 +86,9 @@ export default {
   methods: {
     signout() {
       const api = `${process.env.VUE_APP_APIPATH}logout`;
-      const vm = this;
       this.$http.post(api).then((response) => {
         if (response.data.success) {
-          vm.$router.push("/guests/home");
+          this.$router.push("/guests/home");
         }
       });
     }

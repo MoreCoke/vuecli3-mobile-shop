@@ -87,20 +87,18 @@ export default {
   },
   methods: {
     getOrderData(orderid) {
-      const vm = this;
       const url = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_CUSTOMPATH}/order/${orderid}`;
-      vm.$http.get(url).then((response) => {
-        vm.order = response.data.order;
+      this.$http.get(url).then((response) => {
+        this.order = response.data.order;
       });
     },
     payOrder(orderid) {
-      const vm = this;
       const url = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_CUSTOMPATH}/pay/${orderid}`;
-      vm.effect.orderLoading = true;
-      vm.$http.post(url).then((response) => {
-        vm.$store.dispatch("updateMessage", { message: response.data.message, status: "success" });
-        vm.effect.orderLoading = false;
-        vm.getOrderData(orderid);
+      this.effect.orderLoading = true;
+      this.$http.post(url).then((response) => {
+        this.$store.dispatch("updateMessage", { message: response.data.message, status: "success" });
+        this.effect.orderLoading = false;
+        this.getOrderData(orderid);
       });
     },
     toGuestHome() {

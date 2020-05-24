@@ -51,12 +51,11 @@ export default {
   methods: {
     // 取得當前購物車資料
     getCartData() {
-      const vm = this;
       const url = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
-      vm.$store.commit("LOADING", true);
-      vm.$http.get(url).then((response) => {
-        vm.cartProducts = response.data.data;
-        vm.$store.commit("LOADING", false);
+      this.$store.commit("LOADING", true);
+      this.$http.get(url).then((response) => {
+        this.cartProducts = response.data.data;
+        this.$store.commit("LOADING", false);
       });
     },
     // 追蹤當前結帳步驟，用來渲染相對應的組件
