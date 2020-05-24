@@ -40,7 +40,6 @@ export default {
   },
   data() {
     return {
-      random: [],
       randomCards: [],
       coupons: [
         {
@@ -67,17 +66,22 @@ export default {
   methods: {
     getData() {
       const url = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_CUSTOMPATH}/products/all`;
-      const vm = this;
-      vm.$store.commit("LOADING", true);
-      vm.$http.get(url).then((response) => {
-        vm.$store.commit("LOADING", false);
-        vm.getRandom(...response.data.products);
+      this.$store.commit("LOADING", true);
+      this.$http.get(url).then((response) => {
+        this.$store.commit("LOADING", false);
+        this.createRandomCard(response.data.products);
       });
     },
-    getRandom(...data) {
-      const vm = this;
+    createRandomCard(data) {
       const len = data.length;
-      const newData = data.map((item) => {
+      while (this.randomCards.length < 6) {
+        const r = Math.floor(Math.random() * len);
+        // 因為 push 到陣列內的物件是傳參考，所以 indexOf 是找的到參考的
+        if (this.randomCards.indexOf(data[r]) === -1) {
+          this.randomCards.push(data[r]);
+        }
+      }
+      this.randomCards = this.randomCards.map((item) => {
         const obj = {};
         obj.title = item.title;
         obj.imgUrl = item.imgUrl;
@@ -85,81 +89,65 @@ export default {
         obj.found = false;
         return obj;
       });
-      while (vm.random.length < 6) {
-        const r = Math.floor(Math.random() * len);
-        if (vm.random.indexOf(newData[r]) === -1) {
-          vm.random.push(newData[r]);
-        }
-      }
-      vm.createRandomCard();
+      const newRandomCards = JSON.parse(JSON.stringify(this.randomCards));
+      this.randomCards = newRandomCards.concat(this.randomCards);
+      this.shuffleRandomCards();
     },
-    createRandomCard() {
-      const vm = this;
-      const len = vm.random.length;
-      while (vm.randomCards.length < 6) {
-        const r = Math.floor(Math.random() * len);
-        if (vm.randomCards.indexOf(vm.random[r]) === -1) {
-          vm.randomCards.push(vm.random[r]);
-        }
-      }
-      const newRandomCards = JSON.parse(JSON.stringify(vm.randomCards));
-      vm.randomCards = newRandomCards.concat(vm.randomCards);
-      vm.shuffleRandomCards();
-    },
+    // 洗牌，將陣列內的物件資料打亂
     shuffleRandomCards() {
       this.randomCards.sort(() => Math.random());
     },
+    // 翻牌
     flippedCard(card) {
-      const vm = this;
-      let flippedLen;
       if (!card.flipped || !card.found) {
-        flippedLen = this.randomCards.filter(flipcard => flipcard.flipped).length;
+        // 用來記錄目前翻牌數量
+        const flippedLen = this.randomCards.filter(flipcard => flipcard.flipped).length;
+        // 翻第一張牌
         if (flippedLen === 0) {
           card.flipped = true;
+          // 翻第二張牌，場上已經翻開一張牌
         } else if (flippedLen === 1) {
           card.flipped = true;
-          vm.checkSameCards();
+          this.checkSameCards();
         }
       }
     },
+    // 檢查翻開的卡是否相同
     checkSameCards() {
-      const vm = this;
       const flippedCards = this.randomCards.filter(card => card.flipped);
       if (flippedCards[0].title === flippedCards[1].title) {
         flippedCards[0].found = true;
         flippedCards[1].found = true;
-        vm.checkFoundCards();
+        this.checkFoundCards();
       }
       setTimeout(() => {
         flippedCards[0].flipped = false;
         flippedCards[1].flipped = false;
       }, 1000);
     },
+    // 檢查全部的卡是不是都被找到了
     checkFoundCards() {
-      const vm = this;
-      const allCardsLen = vm.randomCards.length;
-      const foundCardsLen = vm.randomCards.filter(card => card.found).length;
+      const allCardsLen = this.randomCards.length;
+      const foundCardsLen = this.randomCards.filter(card => card.found).length;
       if (allCardsLen === foundCardsLen) {
-        vm.getRandomCoupon();
+        this.getRandomCoupon();
       }
     },
+    // 送出隨機的優惠卷
     getRandomCoupon() {
-      const vm = this;
-      const r = Math.floor(Math.random() * vm.coupons.length);
-      vm.randomCoupon = vm.coupons[r];
+      const r = Math.floor(Math.random() * this.coupons.length);
+      this.randomCoupon = this.coupons[r];
       setTimeout(() => {
-        vm.gameOver();
+        this.gameOver();
       }, 2000);
     },
     gameOver() {
-      const vm = this;
-      vm.gameover = true;
-      localStorage.setItem("coupon", JSON.stringify(vm.randomCoupon));
+      this.gameover = true;
+      localStorage.setItem("coupon", JSON.stringify(this.randomCoupon));
     }
   },
   created() {
     this.getData();
-    // this.getCoupons();
   }
 };
 </script>
