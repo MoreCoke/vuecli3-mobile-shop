@@ -3,7 +3,7 @@
     <div class="topic">品牌故事</div>
     <div class="row">
       <div class="col-md-5 d-flex flex-column justify-content-center align-items-center">
-        <div class="boss-img" :style="{ backgroundImage : `url(${publicPath}img/boss.png)`}"></div>
+        <div class="boss-img" :style="bossImg"></div>
         <p class="boss-text">
           <i class="fas fa-caret-up"></i>老闆喜歡帶筆電進電影院邊看電影邊工作，索性將總店開在戲院。
         </p>
@@ -66,6 +66,11 @@ export default {
     return {
       publicPath: process.env.BASE_URL
     };
+  },
+  computed: {
+    bossImg() {
+      return { backgroundImage: `url(${this.publicPath}img/boss.png)` };
+    }
   }
 };
 </script>
