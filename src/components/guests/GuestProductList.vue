@@ -85,75 +85,68 @@ export default {
     // 取得所有商品資料
     getData() {
       const url = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_CUSTOMPATH}/products/all`;
-      const vm = this;
-      vm.$store.commit("LOADING", true);
-      vm.$http.get(url).then((response) => {
-        vm.products = response.data.products;
-        vm.$store.commit("LOADING", false);
-        vm.getTargetProductList(vm.homeProductTypeIndex["type"], vm.homeProductTypeIndex["index"]);
+      this.$store.commit("LOADING", true);
+      this.$http.get(url).then((response) => {
+        this.products = response.data.products;
+        this.$store.commit("LOADING", false);
+        this.getTargetProductList(this.homeProductTypeIndex["type"], this.homeProductTypeIndex["index"]);
       });
     },
     // 撈所有資料到前端，依品牌和商品類型分類商品
-    /* eslint-disable prefer-destructuring */
     getTargetProductList(type, index) {
-      const vm = this;
-      const brand = vm.$route.params.brand;
+      const { brand } = this.$route.params;
       if (brand === "全部品牌") {
         if (type === "全部商品") {
-          vm.targetProducts = vm.products.slice(0);
-          vm.currentTypeIndex = 0;
+          this.targetProducts = this.products.slice(0);
+          this.currentTypeIndex = 0;
         } else {
-          vm.targetProducts = vm.products.filter(
-            item => type === vm.classifyType(item["unit"])
+          this.targetProducts = this.products.filter(
+            item => type === this.classifyType(item["unit"])
           );
-          vm.currentTypeIndex = index;
+          this.currentTypeIndex = index;
         }
       } else if (brand !== "全部品牌") { // 原本是else，因應no-lonely-if改寫
         if (type === "全部商品") {
-          vm.targetProducts = vm.products.filter(
+          this.targetProducts = this.products.filter(
             item => brand === item.category
           );
-          vm.currentTypeIndex = 0;
+          this.currentTypeIndex = 0;
         } else {
-          vm.targetProducts = vm.products.filter(
-            item => brand === item.category && type === vm.classifyType(item["unit"])
+          this.targetProducts = this.products.filter(
+            item => brand === item.category && type === this.classifyType(item["unit"])
           );
-          vm.currentTypeIndex = index;
+          this.currentTypeIndex = index;
         }
       }
-      vm.productsPagination();
+      this.productsPagination();
     },
-    /* eslint-enable prefer-destructuring */
     // 根據選擇品牌商品數量做分頁
     /* eslint-disable no-unused-expressions */
     productsPagination(page = 1) {
-      const vm = this;
-      vm.pagination.total_pages = Math.ceil(
-        vm.targetProducts.length / vm.pageMaxCard
+      this.pagination.total_pages = Math.ceil(
+        this.targetProducts.length / this.pageMaxCard
       );
-      vm.pagination.current_page = page;
-      vm.pagination.current_page < vm.pagination.total_pages
-        ? (vm.pagination.has_next = true)
-        : (vm.pagination.has_next = false);
-      vm.pagination.current_page > 1
-        ? (vm.pagination.has_pre = true)
-        : (vm.pagination.has_pre = false);
-      vm.getCurrentProductList(page);
+      this.pagination.current_page = page;
+      this.pagination.current_page < this.pagination.total_pages
+        ? (this.pagination.has_next = true)
+        : (this.pagination.has_next = false);
+      this.pagination.current_page > 1
+        ? (this.pagination.has_pre = true)
+        : (this.pagination.has_pre = false);
+      this.getCurrentProductList(page);
     },
     /* eslint-enable no-unused-expressions */
     // 根據當前頁數回傳對應商品，一頁最多9個商品
     getCurrentProductList(page) {
-      const vm = this;
       const startcard = (page - 1) * 9;
       const endcard = page * 9;
-      vm.showProducts = vm.targetProducts.slice(startcard, endcard);
+      this.showProducts = this.targetProducts.slice(startcard, endcard);
     }
   },
   computed: {
     showNoProduct() {
       return (
-        typeof this.showProducts !== "undefined"
-        && this.showProducts.length === 0
+        this.showProducts.length === 0
       );
     },
     homeProductTypeIndex() {
