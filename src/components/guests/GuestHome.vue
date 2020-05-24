@@ -95,7 +95,7 @@
       <div class="container">
         <div class="row align-items-center">
           <div class="col-md-6">
-            <img class="renew-imgcenter" :src="`${publicPath}img/hweil_p30pro.png`" alt />
+            <img class="renew-imgcenter" :src="huaweiPhoneImg" alt />
           </div>
           <div class="col-md-6">
             <div class="row">
@@ -260,39 +260,36 @@ export default {
     };
   },
   methods: {
-    // 取得所有商品資料
-    getData() {
+    // 先取得所有商品資料，再取得汰舊換新的隨機推薦手機
+    getRandomProduct() {
       const url = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_CUSTOMPATH}/products/all`;
-      const vm = this;
-      vm.$http.get(url).then((response) => {
-        vm.getRandomProduct(...response.data.products);
+      this.$http.get(url).then((response) => {
+        const data = response.data.products;
+        const len = data.length;
+        while (this.random.length < 9) {
+          const r = Math.floor(Math.random() * len);
+          if (this.random.indexOf(data[r]) === -1 && data[r].unit === "台") {
+            this.random.push(data[r]);
+          }
+        }
       });
     },
     // 根據首頁點選商品送出相對的index
     emitProductType(type, index) {
-      const vm = this;
-      this.$nextTick(() => {
-        vm.$store.commit("HOME_PRODUCT_TYPE_INDEX", { type, index });
-      });
-    },
-    // 取得汰舊換新的隨機推薦手機
-    getRandomProduct(...data) {
-      const vm = this;
-      const len = data.length;
-      while (vm.random.length < 9) {
-        const r = Math.floor(Math.random() * len);
-        if (vm.random.indexOf(data[r]) === -1 && data[r].unit === "台") {
-          vm.random.push(data[r]);
-        }
-      }
+      this.$store.commit("HOME_PRODUCT_TYPE_INDEX", { type, index });
     },
     // 重新編譯圖片路徑
     compileImgPath(path) {
       return { backgroundImage: `url(${this.publicPath}img/${path})` };
     }
   },
+  computed: {
+    huaweiPhoneImg() {
+      return `${this.publicPath}img/hweil_p30pro.png`;
+    }
+  },
   created() {
-    this.getData();
+    this.getRandomProduct();
   }
 };
 </script>
